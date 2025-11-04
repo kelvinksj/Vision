@@ -10,4 +10,4 @@ Don't use this main branch for programming. Create sub branch.
 # Branch
 | Branch Name | Comments |
 |:---|:---|
-| Example 1 | Example comment |
+| Sample | Use as sample program |
