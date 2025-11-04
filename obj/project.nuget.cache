@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pNnAJcczIrI=",
+  "dgSpecHash": "XxqNMkHVvu0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\TaskManagerWeb.csproj",
+  "projectFilePath": "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\TaskManagerWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kelvinkoh\\.nuget\\packages\\barcodelib\\3.1.4\\barcodelib.3.1.4.nupkg.sha512",
     "C:\\Users\\kelvinkoh\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",

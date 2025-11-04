@@ -11,293 +11,573 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TaskManagerWeb
 build_property.RootNamespace = TaskManagerWeb
-build_property.ProjectDir = C:\Users\kelvinkoh\Desktop\0120-UI-Manager-G2\
+build_property.ProjectDir = C:\Users\kelvinkoh\Desktop\New Projects\Github\Vision\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\kelvinkoh\Desktop\0120-UI-Manager-G2
+build_property.MSBuildProjectDirectory = C:\Users\kelvinkoh\Desktop\New Projects\Github\Vision
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/App.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Layout/MainLayout.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/Add.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/Add.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XEFkZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/AddSuccess.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/AddSuccess.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XEFkZFN1Y2Nlc3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/Edit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/Edit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XEVkaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/EditSuccess.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/EditSuccess.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XEVkaXRTdWNjZXNzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/Login.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XExvZ2luLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/Logout.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/Logout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XExvZ291dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/UnauthorizedError.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/UnauthorizedError.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XFVuYXV0aG9yaXplZEVycm9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Account/Users.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Account/Users.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XFVzZXJzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/MsgList.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/MsgList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cTXNnTGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/Pagination.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/Pagination.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUGFnaW5hdGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/PopContainer.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/PopContainer.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUG9wQ29udGFpbmVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/PopEndProd.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/PopEndProd.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUG9wRW5kUHJvZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/PopLine.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/PopLine.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUG9wTGluZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/PopMsg.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/PopMsg.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUG9wTXNnLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Common/RenderFragmentComponent.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Common/RenderFragmentComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25cUmVuZGVyRnJhZ21lbnRDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Error.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Home.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/HomeImg.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/HomeImg.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lSW1nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CheckIn.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CheckIn.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ2hlY2tJbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CheckInMaintenance.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CheckInMaintenance.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ2hlY2tJbk1haW50ZW5hbmNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CheckInManual.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CheckInManual.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ2hlY2tJbk1hbnVhbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CheckInPage.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CheckInPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ2hlY2tJblBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CheckOutPage.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CheckOutPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ2hlY2tPdXRQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CPC.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CPC.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ1BDLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CPCN.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CPCN.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ1BDTi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CPCNew.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CPCNew.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ1BDTmV3LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/CPCPage.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/CPCPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcQ1BDUGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/DragDrop.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/DragDrop.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcRHJhZ0Ryb3AucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/EditOrderKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/EditOrderKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcRWRpdE9yZGVyS2l0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Gaylord.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Gaylord.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcR2F5bG9yZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/GaylordPage.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/GaylordPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcR2F5bG9yZFBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Island.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Island.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcSXNsYW5kLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/LayoutList.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/LayoutList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTGF5b3V0TGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/LineEdit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/LineEdit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTGluZUVkaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/LineList.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/LineList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTGluZUxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/LineRun.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/LineRun.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTGluZVJ1bi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/LineView.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/LineView.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTGluZVZpZXcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/AddKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/AddKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXEFkZEtpdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/AddKitSuccess.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/AddKitSuccess.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXEFkZEtpdFN1Y2Nlc3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/AddPart.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/AddPart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXEFkZFBhcnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/EditKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/EditKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXEVkaXRLaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/EditPart.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/EditPart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXEVkaXRQYXJ0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Manual/SetupKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Manual/SetupKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTWFudWFsXFNldHVwS2l0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/MoveRobot.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/MoveRobot.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTW92ZVJvYm90LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/MoveTable.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/MoveTable.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcTW92ZVRhYmxlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/OrderKitList.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/OrderKitList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcT3JkZXJLaXRMaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/QuickSetup.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/QuickSetup.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcUXVpY2tTZXR1cC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/AddKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/AddKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxBZGRLaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/AddPart.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/AddPart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxBZGRQYXJ0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/EditKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/EditKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxFZGl0S2l0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/EditPart.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/EditPart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxFZGl0UGFydC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/Manage.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/Manage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxNYW5hZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/ScanAll.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/ScanAll.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxTY2FuQWxsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Scan/ScanOne.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Scan/ScanOne.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2NhblxTY2FuT25lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/SetupLayout.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/SetupLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2V0dXBMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/SetupOrderKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/SetupOrderKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU2V0dXBPcmRlcktpdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/Standard.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/Standard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcU3RhbmRhcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/TableEdit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/TableEdit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcVGFibGVFZGl0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/VAS.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/VAS.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcVkFTLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Mattel/ViewNode.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Mattel/ViewNode.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYXR0ZWxcVmlld05vZGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Menu/MenuKit.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Menu/MenuKit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZW51XE1lbnVLaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Menu/MenuLine.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Menu/MenuLine.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZW51XE1lbnVMaW5lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Menu/MenuMain.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Menu/MenuMain.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZW51XE1lbnVNYWluLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Menu/MenuMaintenance.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Menu/MenuMaintenance.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZW51XE1lbnVNYWludGVuYW5jZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Menu/MenuUser.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Menu/MenuUser.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZW51XE1lbnVVc2VyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Pages/Setting/Settings.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Pages/Setting/Settings.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTZXR0aW5nXFNldHRpbmdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/Routes.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kelvinkoh/Desktop/0120-UI-Manager-G2/Components/_Imports.razor]
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/Add.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBZGQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/AddSuccess.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBZGRTdWNjZXNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxFZGl0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/EditSuccess.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxFZGl0U3VjY2Vzcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/UnauthorizedError.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxVbmF1dGhvcml6ZWRFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Account/Users.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxVc2Vycy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/MsgList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXE1zZ0xpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/Pagination.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFBhZ2luYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/PopContainer.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFBvcENvbnRhaW5lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/PopEndProd.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFBvcEVuZFByb2QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/PopLine.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFBvcExpbmUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/PopMsg.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFBvcE1zZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Common/RenderFragmentComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbW9uXFJlbmRlckZyYWdtZW50Q29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/HomeImg.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZUltZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CheckIn.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENoZWNrSW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CheckInMaintenance.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENoZWNrSW5NYWludGVuYW5jZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CheckInManual.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENoZWNrSW5NYW51YWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CheckInPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENoZWNrSW5QYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CheckOutPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENoZWNrT3V0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CPC.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENQQy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CPCN.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENQQ04ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CPCNew.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENQQ05ldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/CPCPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXENQQ1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/DragDrop.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXERyYWdEcm9wLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/EditOrderKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXEVkaXRPcmRlcktpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Gaylord.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXEdheWxvcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/GaylordPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXEdheWxvcmRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Island.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXElzbGFuZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/LayoutList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXExheW91dExpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/LineEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXExpbmVFZGl0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/LineList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXExpbmVMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/LineRun.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXExpbmVSdW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/LineView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXExpbmVWaWV3LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/AddKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxBZGRLaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/AddKitSuccess.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxBZGRLaXRTdWNjZXNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/AddPart.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxBZGRQYXJ0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/EditKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxFZGl0S2l0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/EditPart.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxFZGl0UGFydC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Manual/SetupKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1hbnVhbFxTZXR1cEtpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/MoveRobot.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1vdmVSb2JvdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/MoveTable.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE1vdmVUYWJsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/OrderKitList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXE9yZGVyS2l0TGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/QuickSetup.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFF1aWNrU2V0dXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/AddKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cQWRkS2l0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/AddPart.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cQWRkUGFydC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/EditKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cRWRpdEtpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/EditPart.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cRWRpdFBhcnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/Manage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cTWFuYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/ScanAll.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cU2NhbkFsbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Scan/ScanOne.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNjYW5cU2Nhbk9uZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/SetupLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNldHVwTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/SetupOrderKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFNldHVwT3JkZXJLaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/Standard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFN0YW5kYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/TableEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFRhYmxlRWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/VAS.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFZBUy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Mattel/ViewNode.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0dGVsXFZpZXdOb2RlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Menu/MenuKit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVudVxNZW51S2l0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Menu/MenuLine.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVudVxNZW51TGluZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Menu/MenuMain.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVudVxNZW51TWFpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Menu/MenuMaintenance.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVudVxNZW51TWFpbnRlbmFuY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Menu/MenuUser.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVudVxNZW51VXNlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Pages/Setting/Settings.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0dGluZ1xTZXR0aW5ncy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Um91dGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kelvinkoh/Desktop/New Projects/Github/Vision/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\TaskManagerWeb.csproj": {}
+    "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\TaskManagerWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\TaskManagerWeb.csproj": {
+    "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\TaskManagerWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\TaskManagerWeb.csproj",
+        "projectUniqueName": "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\TaskManagerWeb.csproj",
         "projectName": "TaskManagerWeb",
-        "projectPath": "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\TaskManagerWeb.csproj",
+        "projectPath": "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\TaskManagerWeb.csproj",
         "packagesPath": "C:\\Users\\kelvinkoh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kelvinkoh\\Desktop\\0120-UI-Manager-G2\\obj\\",
+        "outputPath": "C:\\Users\\kelvinkoh\\Desktop\\New Projects\\Github\\Vision\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
