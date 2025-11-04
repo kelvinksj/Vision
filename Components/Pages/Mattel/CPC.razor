@@ -1,0 +1,301 @@
+@page "/Mattel/CPC"
+@rendermode InteractiveServer
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+
+<style>
+    .cpc-style {
+        .text-center {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .box-outer {
+            --outer-height: 100px;
+            --outer-width: 100px;
+            --title-header: 0.2;
+            --title-height: 0.6;
+            height: var(--outer-height);
+            width: var(--outer-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+
+            .box-header {
+                height: calc((var(--outer-height) * var(--title-header)));
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-top {
+                height: calc((var(--outer-height) * var(--title-height)) - 1px);
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-text {
+                height: calc((var(--outer-height) * (1 - var(--title-header) - var(--title-height))) - 1px);
+                width: 100%;
+                background-color: white;
+            }
+        }
+
+        .icon_box {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .load_box {
+            height: calc(100% - 30%);
+            width: calc(100% - 20%);
+        }
+
+        .icon_x_red {
+            width: calc(100% - 30%);
+            height: calc(100% - 30%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+
+            .custom-select {
+                width: 90px;
+                outline: none !important;
+            }
+
+            .icon-box {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                pointer-events: none;
+            }
+
+            .setSVG {
+                height: 30px;
+                width: 30px;
+            }
+        }
+    }
+</style>
+
+<div class="cpc-style" style="position: relative; height: 322px; width: 652px; overflow: clip;">
+    @if (lineData?.Count > 0)
+    {
+        posX = 0;
+        posY = 0;
+
+        for (int i = 0; i < lineData.Count - 6; i++)
+        {
+            htmlStyle1 = $"z-index: 2; position: absolute; left: {posX}px; top: {posY}px;";
+            var tempData = lineData[i];
+            var index = i;
+
+            if (lineData[i].ContainerType == "CheckOut"
+            || lineData[i].ContainerType == "LoadOut"
+            || lineData[i].ContainerType == "Empty"
+            || lineData[i].ContainerType == "Table"
+            || lineData[i].ContainerType == "Loaded"
+            || lineData[i].ContainerType == "Full")
+            {
+                displayType = lineData[i].ContainerType;
+            }
+            else
+            {
+                displayType = "N/A";
+            }
+
+            <div style="@htmlStyle1">
+                <div style="margin-top: 5px; margin-left: 5px;">
+                    <EditForm Model="@locSetting" OnValidSubmit="() => OnValidSubmit()" autocomplete="off"
+                        Context="editContext">
+                        <DataAnnotationsValidator />
+                        <div class="custom-select-wrapper">
+                            <InputSelect class="form-control custom-select" placeholder="NA" maxlength="15"
+                                disabled="@disableLine" @bind-Value="locSetting[index].Parameter">
+                                <option value="">NA</option>
+                                @foreach (var item in layoutAreas)
+                                {
+                                    <option value="@item.LineCode">
+                                        @item.LineCode
+                                    </option>
+                                }
+                            </InputSelect>
+                            @if (!disableLine)
+                            {
+                                <div class="icon-box">
+                                    <div class="icon_selection_down setSVG" />
+                                </div>
+                            }
+                        </div>
+                    </EditForm>
+                </div>
+                <div style="margin-bottom: 5px;" />
+                <div class="box-outer" @onclick="() => OnClickBox(tempData)">
+                    <div class="box-header" style="background-color: white; color: black;">
+                        <div class="text-center no-select">
+                            @lineData[i].Point
+                        </div>
+                    </div>
+                    <div class="box-top">
+                        @if (lineData[i].ContainerType == "CheckOut")
+                        {
+                            <div class="icon_box" style="background-color: #bad0fb;">
+                                <div class="icon_x_red" style="background-color: #bad0fb;" />
+                            </div>
+                        }
+                        else if (lineData[i].ContainerType == "LoadOut")
+                        {
+                            <div class="icon_box" style="background-color: #bad0fb;">
+                                <div class="load_box" style="background-color: #fbe9d0;" />
+                            </div>
+                        }
+                        else if (lineData[i].ContainerType == "Empty")
+                        {
+                            <div class="icon_box" style="background-color: #d9d9d9;" />
+                        }
+                        else if (lineData[i].ContainerType == "Table")
+                        {
+                            <div class="icon_box" style="background-color: #fd9448;" />
+                        }
+                        else if (lineData[i].ContainerType == "Loaded"
+                        || lineData[i].ContainerType == "Full")
+                        {
+                            <div class="icon_box" style="background-color: #fd9448;">
+                                <div class="load_box" style="background-color: #fbe9d0;" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="icon_box" style="background-color: red;" />
+                        }
+                    </div>
+                    <div class="box-text">
+                        <div class="text-center no-select">
+                            @displayType
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            posX += 110;
+        }
+
+        posX = 0;
+        posY = 170;
+
+        for (int i = 6; i < lineData.Count; i++)
+        {
+            htmlStyle1 = $"z-index: 2; position: absolute; left: {posX}px; top: {posY}px;";
+            var tempData = lineData[i];
+            var index = i;
+
+            if (lineData[i].ContainerType == "CheckOut"
+            || lineData[i].ContainerType == "LoadOut"
+            || lineData[i].ContainerType == "Empty"
+            || lineData[i].ContainerType == "Table"
+            || lineData[i].ContainerType == "Loaded"
+            || lineData[i].ContainerType == "Full")
+            {
+                displayType = lineData[i].ContainerType;
+            }
+            else
+            {
+                displayType = "N/A";
+            }
+
+            <div style="@htmlStyle1">
+                <div style="margin-top: 5px; margin-left: 5px;">
+                    <EditForm Model="@locSetting" OnValidSubmit="() => OnValidSubmit()" autocomplete="off"
+                        Context="editContext">
+                        <DataAnnotationsValidator />
+                        <div class="custom-select-wrapper">
+                            <InputSelect class="form-control custom-select" placeholder="NA" maxlength="15"
+                                disabled="@disableLine" @bind-Value="locSetting[index].Parameter">
+                                <option value="">NA</option>
+                                @foreach (var item in layoutAreas)
+                                {
+                                    <option value="@item.LineCode">
+                                        @item.LineCode
+                                    </option>
+                                }
+                            </InputSelect>
+                            @if (!disableLine)
+                            {
+                                <div class="icon-box">
+                                    <div class="icon_selection_down setSVG" />
+                                </div>
+                            }
+                        </div>
+                    </EditForm>
+                </div>
+                <div style="margin-bottom: 5px;" />
+                <div class="box-outer" @onclick="() => OnClickBox(tempData)">
+                    <div class="box-header" style="background-color: white; color: black;">
+                        <div class="text-center no-select">
+                            @lineData[i].Point
+                        </div>
+                    </div>
+                    <div class="box-top">
+                        @if (lineData[i].ContainerType == "CheckOut")
+                        {
+                            <div class="icon_box" style="background-color: #bad0fb;">
+                                <div class="icon_x_red" style="background-color: #bad0fb;" />
+                            </div>
+                        }
+                        else if (lineData[i].ContainerType == "LoadOut")
+                        {
+                            <div class="icon_box" style="background-color: #bad0fb;">
+                                <div class="load_box" style="background-color: #fbe9d0;" />
+                            </div>
+                        }
+                        else if (lineData[i].ContainerType == "Empty")
+                        {
+                            <div class="icon_box" style="background-color: #d9d9d9;" />
+                        }
+                        else if (lineData[i].ContainerType == "Table")
+                        {
+                            <div class="icon_box" style="background-color: #fd9448;" />
+                        }
+                        else if (lineData[i].ContainerType == "Loaded"
+                        || lineData[i].ContainerType == "Full")
+                        {
+                            <div class="icon_box" style="background-color: #fd9448;">
+                                <div class="load_box" style="background-color: #fbe9d0;" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="icon_box" style="background-color: red;" />
+                        }
+                    </div>
+                    <div class="box-text" style="background-color: white; color: black;">
+                        <div class="text-center no-select">
+                            @displayType
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            posX += 110;
+        }
+    }
+</div>

@@ -1,0 +1,20 @@
+services:
+  sm:
+    image: sm_mattel:v1.3.2-250227
+    container_name: sm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.126
+    ports:
+      - 20070:20070
+      - 443:443
+
+networks:
+  my_network:
+    name: rcs_bridge
+    external: true

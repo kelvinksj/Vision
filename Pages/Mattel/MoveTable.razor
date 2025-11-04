@@ -1,0 +1,220 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/MoveTable"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject ContainerService ContainerService
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject PaginationService<Element.Table> PaginationService
+@inject SortingModel<Element.Table> SortingModel
+@inject TaskManagerService TaskManagerService
+
+<style>
+    .MoveRobot-style {
+        .input {
+            margin-right: 20px;
+            background-color: rgba(217, 217, 217, 1);
+            border-color: black;
+            border-radius: 0px;
+            width: 230px;
+        }
+
+        .label {
+            font-size: 120x;
+            font-weight: bold;
+            color: rgba(110, 113, 115, 1);
+            margin-top: 10px;
+        }
+
+        .table-set {
+            height: 390px;
+        }
+
+        .setSVG {
+            position: absolute;
+            right: 5px;
+            top: 13px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer">
+    <Authorized>
+        <div class="MoveRobot-style outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <h1 id="MyHeader" class="header no-select">
+                        Table Maintenance
+                    </h1>
+                </div>
+                <div class="box-wrapper">
+                    <div class="box2">
+                        <div class="segmentRow">
+                            <div class="segmentColumn gapRight">
+                                <div class="segmentColumn gapBottom">
+                                    <label class="label no-select">Please enter a filter :</label>
+                                    <div class="segmentRow">
+                                        <input @bind="filter" type="text" class="form-control input" maxlength="15"
+                                            autocomplete="off" />
+                                        <button type="button" class="btn btn-sm common-btn"
+                                            @onclick="() => OnClickFilter()">
+                                            Query
+                                        </button>
+                                        <button type="button" class="btn btn-sm common-btn gapLeft"
+                                            disabled="@disableBtn" style="@disableColor" @onclick="() => OnClickMove()">
+                                            Move
+                                        </button>
+                                        <button type="button" class="btn btn-sm common-btn gapLeft"
+                                            disabled="@disableBtn" style="@disableColor"
+                                            @onclick="() => OnClickUpdate()">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-set">
+                                    <table class="table scrolldown">
+                                        <colgroup>
+                                            <col style="width: 100px;">
+                                            <col style="width: 120px;">
+                                            <col style="width: 120px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 140px;">
+                                            <col style="width: 170px;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            Code
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["TableCode"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("TableCode"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            Location
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Location"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Location"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="header-wrapper segmentRow">
+                                                        <div style="">
+                                                            Status
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Status"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Status"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="header-wrapper segmentRow">
+                                                        <div style="">
+                                                            Type
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Type"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Type"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            Kit
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["KitNumber"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("KitNumber"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            Part
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["PartNumber"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("PartNumber"))" />
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (PaginationService.GetItems().Any())
+                                            {
+                                                foreach (var item in PaginationService.GetItems())
+                                                {
+                                                    <tr class="@GetRow(item)" @onclick="() => SelectRow(item)">
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.TableCode
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.Location
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select" style="text-align: center;">
+                                                                @item.Status
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select" style="text-align: center;">
+                                                                @item.Type
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.KitNumber
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.PartNumber
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="6" class="text-center no-select">
+                                                        <div>No data</div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <Pagination T="Element.Table" PaginationService="PaginationService"
+                                    OnPageChanged="OnPageChanged" />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <MsgList MList="@mList" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <TableEdit popTableEditData="popTableEditData" />
+            </div>
+        </div>
+        @if (isDisplayMove)
+        {
+            <ViewNode UpdatePosition=ChildUpdatePosition />
+        }
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center"></span>
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

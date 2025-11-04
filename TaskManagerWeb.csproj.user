@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <UnoPlatformIDE>vscode</UnoPlatformIDE>
+    <UnoPlatformIDEVersion>1.91.1</UnoPlatformIDEVersion>
+    <UnoPlatformExtension>unoplatform.vscode 0.15.6</UnoPlatformExtension>
+    <UnoVSCodeCSharpExtension>ms-dotnettools.csharp 2.45.17</UnoVSCodeCSharpExtension>
+    <UnoVSCodeCSharpDevKitExtension>ms-dotnettools.csdevkit 1.10.12</UnoVSCodeCSharpDevKitExtension>
+    <ActiveDebugFramework>net8.0</ActiveDebugFramework>
+  </PropertyGroup>
+</Project>

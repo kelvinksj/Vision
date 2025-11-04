@@ -1,0 +1,19 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+services:
+  ui:
+    image: '0120ui:UI_v1.6.4'
+    container_name: 'ui'
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      rcs_bridge:
+        ipv4_address: 70.70.70.120
+    ports:
+      - '20000:20000/tcp'
+
+networks:
+  rcs_bridge:
+    external: true

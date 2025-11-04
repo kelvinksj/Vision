@@ -1,0 +1,58 @@
+{
+  "ProductionData": [
+    {
+      "ID": 1,
+      "LineName": "Line 1",
+      "LineNumber": "2206",
+      "Description": "",
+      "OrderKitNumber": "",
+      "CreatedData": "2025-02-15T01:15:06.2267587+08:00",
+      "Status": ""
+    },
+    {
+      "ID": 2,
+      "LineName": "Line 2",
+      "LineNumber": "2205",
+      "Description": "",
+      "OrderKitNumber": "",
+      "CreatedData": "2025-02-17T09:29:17.8990711+08:00",
+      "Status": ""
+    },
+    {
+      "ID": 3,
+      "LineName": "Line 3",
+      "LineNumber": "2204",
+      "Description": "",
+      "OrderKitNumber": "",
+      "CreatedData": "2025-02-12T00:28:42.2245915+08:00",
+      "Status": ""
+    },
+    {
+      "ID": 4,
+      "LineName": "Line 4",
+      "LineNumber": "2203",
+      "Description": "",
+      "OrderKitNumber": "",
+      "CreatedData": "2024-12-23T17:34:44.8151286+08:00",
+      "Status": ""
+    },
+    {
+      "ID": 5,
+      "LineName": "Line 5",
+      "LineNumber": "2202",
+      "Description": "",
+      "OrderKitNumber": "P-432441",
+      "CreatedData": "2025-02-12T00:28:45.2818923+08:00",
+      "Status": "Production"
+    },
+    {
+      "ID": 6,
+      "LineName": "Line 6",
+      "LineNumber": "2201",
+      "Description": "",
+      "OrderKitNumber": "",
+      "CreatedData": "2025-02-17T09:46:18.0031505+08:00",
+      "Status": ""
+    }
+  ]
+}

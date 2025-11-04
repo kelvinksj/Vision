@@ -1,0 +1,59 @@
+{
+  "PageTypeList": [
+    {
+      "ID": 1,
+      "Type": "Disable",
+      "Description": "Disable"
+    },
+    {
+      "ID": 2,
+      "Type": "L1",
+      "Description": "Line 1"
+    },
+    {
+      "ID": 3,
+      "Type": "L2",
+      "Description": "Line 2"
+    },
+    {
+      "ID": 4,
+      "Type": "L3",
+      "Description": "Line 3"
+    },
+    {
+      "ID": 5,
+      "Type": "L4",
+      "Description": "Line 4"
+    },
+    {
+      "ID": 6,
+      "Type": "L5",
+      "Description": "Line 5"
+    },
+    {
+      "ID": 7,
+      "Type": "L6",
+      "Description": "Line 6"
+    },
+    {
+      "ID": 8,
+      "Type": "CI",
+      "Description": "Check In"
+    },
+    {
+      "ID": 9,
+      "Type": "CO",
+      "Description": "Check Out"
+    },
+    {
+      "ID": 10,
+      "Type": "CPC",
+      "Description": "Checkpoint Charlie"
+    },
+    {
+      "ID": 11,
+      "Type": "GL",
+      "Description": "Gaylord"
+    }
+  ]
+}

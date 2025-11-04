@@ -1,0 +1,184 @@
+@page "/Account/Edit/{userID:int}"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject UserAccountService UserAccountService
+@inject WorkerService WorkerService
+@inject IJSRuntime JS
+@inject MattelService MattelService
+
+<style>
+    .edit-style {
+        .label-to-input {
+            color: rgba(110, 113, 115, 1);
+        }
+
+        .input-style {
+            width: auto;
+    @* background-color: rgba(217, 217, 217, 1); *@
+        }
+
+        .logo {
+            width: 55px;
+            height: 50px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+
+        .icon_dropdown {
+            display: inline-block;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 12px;
+            padding-right: 20px;
+            cursor: pointer;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .common-btn {
+                width: 130px;
+                height: 50px;
+            }
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+
+            .custom-select {
+                width: 365px;
+    @* background-color: rgba(217, 217, 217, 1); *@
+            }
+
+            .custom-select-arrow {
+                position: absolute;
+                right: 7px;
+                top: 7px;
+                pointer-events: none;
+            }
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<div class="edit-style content">
+    <AuthorizeView Roles="Administrator,Engineer,Supervisor,Operator">
+        <Authorized>
+            <EditForm Model="@user" OnValidSubmit="() => OnValidSubmit(user)" autocomplete="off" Context="editContext">
+                <DataAnnotationsValidator />
+                <div class="segmentColumn gapBottom">
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Username</label>
+                        <InputText @bind-Value="user.UserName" disabled="false" class="form-control input-style"
+                            maxlength="15" placeholder="User Name" autocomplete="off" @oninput="CheckUsername" />
+                        <ValidationMessage For="() => user.UserName" />
+                    </div>
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Password</label>
+                        <InputText @bind-Value="user.Password" type="password" class="form-control input-style"
+                            maxlength="15" placeholder="Password" autocomplete="new-password"
+                            @oninput="CheckPassword" />
+                        <ValidationMessage For="() => user.Password" />
+                    </div>
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">First Name</label>
+                        <InputText @bind-Value="user.FirstName" disabled="@isFirstNameDisable"
+                            class="form-control input-style" maxlength="15" placeholder="First Name" autocomplete="off"
+                            @oninput="CheckFirstName" />
+                        <ValidationMessage For="() => user.FirstName" />
+                    </div>
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Last Name</label>
+                        <InputText @bind-Value="user.LastName" disabled="@isLastNameDisable"
+                            class="form-control input-style" maxlength="15" placeholder="Last Name"
+                            autocomplete="off" />
+                        <ValidationMessage For="() => user.LastName" @oninput="CheckLastName" />
+                    </div>
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Role</label>
+                        <div class="custom-select-wrapper">
+                            <InputSelect @bind-Value="user.UserRole" disabled="@isRoleDisable"
+                                class="form-control custom-select" placeholder="User Role" autocomplete="off"
+                                @bind-Value:after="() => OnUserRoleChange()">
+                                @foreach (object role in Enum.GetValues(typeof(Role)))
+                                {
+                                    @switch (role.ToString())
+                                    {
+                                        case "Administrator":
+                                            @if (currentUserRole == "Administrator")
+                                            {
+                                                <option value="@role">@role</option>
+                                            }
+                                            break;
+                                        case "Engineer":
+                                            @if (currentUserRole == "Administrator"
+                                           || currentUserRole == "Engineer")
+                                            {
+                                                <option value="@role">@role</option>
+                                            }
+                                            break;
+                                        default:
+                                            <option value="@role">@role</option>
+                                            break;
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="() => user.UserRole" />
+                            <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="segmentColumn">
+                        <label class="no-select">Page</label>
+                        <div class="custom-select-wrapper">
+                            <InputSelect @bind-Value="user.Page" class="form-control custom-select"
+                                placeholder="User Page" autocomplete="off" disabled="@IsPageDisabled">
+                                @foreach (var item in page.PageTypeList)
+                                {
+                                    <option value="@item.Type">@item.Description</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="() => user.Page" />
+                            <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="segmentRow gapBottom btn-wrapper">
+                    <button type="submit" disabled="@user.IsChecking" class="btn btn-sm common-btn">
+                        @if (user.IsChecking)
+                        {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        else
+                        {
+                            <span>Save</span>
+                        }
+                    </button>
+                    <img class="logo no-select" src="images/DallasRoboterLogoOnly.png" />
+                    <button type="button" @onclick="CloseModal" disabled="@user.IsChecking"
+                        class="btn btn-sm common-btn">Cancel</button>
+                </div>
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            <span class="spinner-border spinner-border-lg align-center"></span>
+            <span> Checking authorization in progress ...........</span>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>

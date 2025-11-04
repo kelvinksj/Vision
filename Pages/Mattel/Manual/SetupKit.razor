@@ -1,0 +1,237 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/Manual/SetupKit"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject WorkerService WorkerService
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject CommonLib CommonLib
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject PaginationService<MattelClass.Sheet> PaginationService
+@inject PaginationService<MattelClass.SheetData> PartPaginationService
+@inject SortingModel<MattelClass.Sheet> SortingModel
+@inject SortingModel<MattelClass.SheetData> PartSortingModel
+@inject ScanService ScanService
+
+<style>
+    .input {
+        margin-right: 20px;
+        background-color: rgba(217, 217, 217, 1);
+        border-color: black;
+        border-radius: 0px;
+        width: 230px;
+    }
+
+    .label {
+        font-size: 20px;
+        font-weight: bold;
+        color: rgba(110, 113, 115, 1);
+        margin-top: 10px;
+    }
+
+    .icon_filter {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 0;
+        bottom: 15px;
+        margin-right: 5px;
+        background-size: cover;
+        cursor: pointer;
+    }
+
+    .modal-active .top-row,
+    .faded-button {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .active-button {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .icon_delete {
+        height: 150px;
+        width: 150px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .table-set {
+        height: 390px;
+
+        table {
+            th {
+                text-align: left;
+                padding-left: 10px;
+            }
+        }
+    }
+
+    .setSVG {
+        position: absolute;
+        right: 5px;
+        top: 13px;
+        width: 24px;
+        height: 24px;
+    }
+
+    .segmentColumn2 {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Paging {
+        height: 60px;
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor">
+    <Authorized>
+        <div class="outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <h1 id="MyHeader" class="header no-select">
+                        Setup Kit
+                    </h1>
+                </div>
+                <div class="box-wrapper">
+                    <div class="box2">
+                        <div class="segmentColumn gapBottom">
+                            <label class="label no-select">Please enter a filter :</label>
+                            <div class="segmentRow">
+                                <input type="text" class="form-control input" maxlength="15" autocomplete="off"
+                                    @oninput="@(e => FilterKit(e.Value?.ToString() ?? string.Empty))" />
+                                <button type="button" @onclick="Add" class="btn btn-sm common-btn gapRight">
+                                    Add
+                                </button>
+                                <button type="button" @onclick="Edit" class="btn btn-sm common-btn gapRight" style="@KitButtonColor"
+                                    disabled="@string.IsNullOrEmpty(selectedKitNumber)">
+                                    Edit Kit
+                                </button>
+                                <button type="button" @onclick="ShowRemoveKitModal" class="btn btn-sm common-btn"
+                                    style="@KitButtonColor" disabled="@string.IsNullOrEmpty(selectedKitNumber)">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <div class="segmentcolumn">
+                            <div class="segmentRow">
+                                <div class="segmentColumn2 gapRight">
+                                    <div class="table-set">
+                                        <table class="table scrolldown">
+                                            <colgroup>
+                                                <col style="width: 290px;">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="segmentRow">
+                                                            <div class="no-select" style="margin-left: 8px;">
+                                                                Kit #
+                                                            </div>
+                                                            <div class="@(SortingModel.SortIcons["KitNumber"]) setSVG"
+                                                                @onclick="@(async () => await SortItems("KitNumber"))" />
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (PaginationService.GetItems().Any())
+                                                {
+                                                    foreach (var sheet in PaginationService.GetItems())
+                                                    {
+                                                        <tr class="@GetRow(sheet.KitNumber)"
+                                                            @onclick="() => SelectRow(sheet.KitNumber)">
+                                                            <td>
+                                                                <div class="no-select">@sheet.KitNumber</div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr colspan="1" class="text-center no-select">
+                                                        <td>
+                                                            <div>No data</div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="Paging">
+                                        <Pagination T="MattelClass.Sheet" PaginationService="PaginationService"
+                                            OnPageChanged="OnPageChanged" />
+                                    </div>
+                                </div>
+                                <div class="segmentColumn2 gapLeft">
+                                    <div class="table-set">
+                                        <table class="table scrolldown">
+                                            <colgroup>
+                                                <col style="width: 290px;">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="segmentRow">
+                                                            <div class="no-select" style="margin-left: 8px;">
+                                                                Part #
+                                                            </div>
+                                                            <div class="@(PartSortingModel.SortIcons["PartNumber"]) setSVG"
+                                                                @onclick="@(async () => await SortItems("PartNumber"))" />
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (selectedSheet != null && PartPaginationService.GetItems().Any())
+                                                {
+                                                    @foreach (var part in PartPaginationService.GetItems())
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <div class="no-select">@part.PartNumber</div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr colspan="1" class="text-center no-select">
+                                                        <td>
+                                                            <div>No data</div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="Paging">
+                                        <Pagination T="MattelClass.SheetData" PaginationService="PartPaginationService"
+                                            OnPageChanged="OnPageChanged2" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <PopMsg PopMsgData="@popMsgData" />
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center"></span>
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

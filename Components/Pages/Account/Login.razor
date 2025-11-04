@@ -1,0 +1,128 @@
+﻿@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Account/Login"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject UserAccountService UserAccountService
+
+<style>
+    .login-style {
+        .row {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            border: none;
+            border-bottom: 2px solid rgba(243, 109, 51, 1);
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 55px;
+            height: 50px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .common-btn {
+                width: 130px;
+                height: 50px;
+            }
+        }
+    }
+
+    .alert-danger {
+        color: red;
+        background-color: white;
+        border: none;
+        margin-bottom: 15px;
+    }
+
+    .password-section {
+        position: relative;
+        display: inline-block;
+    }
+
+    .icon-box {
+        position: absolute;
+        top: -10px;
+        right: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 60px;
+    }
+
+    .icon_visibility {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .icon_visibility_off {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    /* Hide the built-in Edge password reveal icon */
+    input::-ms-reveal {
+        display: none;
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<div class="login-style content">
+    <EditForm Model="@model" OnValidSubmit="Authenticate" autocomplete="off" Context="editContext">
+        <DataAnnotationsValidator />
+        <div class="segmentColumn">
+            <input @bind="model.UserName" @oninput="CheckInput" class="form-control" placeholder="Username"
+                autocomplete="off" maxlength="15" />
+            <div class="col-xs-12 password-section">
+                <input @bind="model.Password" @oninput="CheckInput2" id="password-field" type="@passwordInputType"
+                    class="form-control" placeholder="Password" autocomplete="off" maxlength="15">
+                <div class="icon-box" @onclick="TogglePasswordVisibility">
+                    <span class="@eyeIconClass" />
+                </div>
+            </div>
+        </div>
+    </EditForm>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert-danger no-select">@errorMessage</div>
+    }
+    <div class="btn-wrapper gapBottom">
+        <button type="button" @onclick="Authenticate" class="btn btn-sm common-btn" disabled="@IsLoginDisabled"
+            style="@disableColor">
+            Login
+        </button>
+        <img class="logo no-select" src="images/DallasRoboterLogoOnly.png" />
+        <button type="button" @onclick="CloseModal" class="btn btn-sm common-btn">
+            Cancel
+        </button>
+    </div>
+</div>

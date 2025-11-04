@@ -1,0 +1,120 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/CPCPage"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject ContainerService ContainerService
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+@inject TaskManagerService TaskManagerService
+
+<style>
+    .icon_cancel_orange {
+        height: 50px;
+        width: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+    }
+
+    .icon-box-wrapper {
+        height: auto;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .custom-select {
+            width: 130px;
+            outline: none !important;
+        }
+
+        .custom-select-arrow {
+            position: absolute;
+            left: 100px;
+            top: 6px;
+            pointer-events: none;
+        }
+    }
+
+    .icon_warning_triangle_red {
+        width: 40px;
+        height: 40px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor,Operator">
+    <Authorized>
+        <div class="outer">
+            <div class="contain-size">
+                <div class="segmentColumn">
+                    <div class="box1 gapBottom">
+                        <h1 id="MyHeader" class="header no-select">
+                            Checkpoint Charlie
+                        </h1>
+                    </div>
+                    <div class="segmentRow gapBottom" style="display: none;">
+                        <div class="icon_warning_triangle_red gapRight" />
+                        <div style="font-size: 24px; color: red;">
+                            Please click the icon below to take action
+                        </div>
+                    </div>
+                    <div class="box-wrapper">
+                        <div class="box2">
+                            <div class="segmentRow">
+                                <div class="segmentColumn">
+                                    <div class=" gapRight">
+                                        <RenderFragmentComponent Content="dynamicComponent!" />
+                                    </div>
+                                    @if (!isOperator)
+                                    {
+                                        <div style="margin-bottom: 200px;" />
+                                        if (!isLineEdit)
+                                        {
+                                            <button type="button" class="btn btn-sm common-btn gapRight"
+                                                style="position: relative; left: 520px;" @onclick="() => OnClickSetting()">
+                                                Setting
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-sm common-btn gapRight"
+                                                style="position: relative; left: 520px;" @onclick="() => OnClickSave()">
+                                                Save
+                                            </button>
+                                        }
+                                    }
+                                </div>
+                                <div>
+                                    <MsgList MList="@mList" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <PopContainer PopContainerData="@popContainerData" />
+        <PopMsg PopMsgData="@popMsgData" />
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center" />
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

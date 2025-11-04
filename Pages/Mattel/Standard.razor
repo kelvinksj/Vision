@@ -1,0 +1,1485 @@
+@page "/Mattel/Standard"
+@rendermode InteractiveServer
+@inject CommonLib CommonLib
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject WorkerService WorkerService
+
+<style>
+    .standard-style {
+        position: relative;
+        height: 450px;
+
+        .dotted-line-container {
+            position: relative;
+            height: 90px;
+            width: 80px;
+        }
+
+        .dotted-line-container::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            border-left: 2px dotted red;
+            height: 100%;
+        }
+
+        .resizable-dot {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .conveyor {
+            height: 40px;
+            width: 590px;
+            border: 1px solid black;
+            background-color: green;
+        }
+
+        .text-center {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .box-command {
+            --command-height: 10px;
+            --command-width: 60px;
+            height: var(--command-height);
+            width: var(--command-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+            cursor: default;
+            background-color: white;
+        }
+
+        .box-outer {
+            --outer-height: 60px;
+            --outer-width: 60px;
+            --title-height: 0.6;
+            height: var(--outer-height);
+            width: var(--outer-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+            cursor: default;
+
+            .box-top {
+                height: calc((var(--outer-height) * var(--title-height)) - 1px);
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-text {
+                height: calc((var(--outer-height) * (1 - var(--title-height))) - 1px);
+                width: 100%;
+                background-color: white;
+            }
+        }
+
+        .custom-wrap {
+            width: 60px;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        .box-table {
+            --table-height: 30px;
+            --table-width: 60px;
+            height: var(--table-height);
+            width: var(--table-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+            background-color: #d3d3d3;
+        }
+    }
+
+    .table-set {
+        width: auto;
+        height: auto;
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative;
+        display: block;
+
+        table {
+            display: block;
+            width: auto;
+            table-layout: auto;
+
+            thead {
+                div {
+                    color: white;
+                }
+
+                tr {
+                    border-collapse: collapse;
+                    border-style: solid;
+                    border-color: black;
+                    border-width: 0px;
+                }
+            }
+
+            tbody {
+                div {
+                    color: black;
+                }
+
+                tr {
+                    border-collapse: collapse;
+                    border-style: solid;
+                    border-color: black;
+                    border-width: 0px;
+                }
+
+                td:nth-of-type(1) {
+                    text-align: left;
+                }
+
+                tr:nth-of-type(even) {
+                    background-color: white;
+                }
+
+                tr:nth-of-type(odd) {
+                    background-color: white;
+                }
+            }
+
+            th,
+            td {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border-spacing: 0;
+            }
+
+            th {
+                border-collapse: collapse;
+                border-style: solid;
+                border-color: black;
+                border-width: 2px;
+                border-bottom-width: 0px;
+
+                position: sticky;
+                top: -1px;
+                z-index: 1;
+                line-height: 50px;
+                text-align: center;
+                background-color: #f36d33;
+                padding: 0px;
+            }
+
+            td {
+                border-collapse: collapse;
+                border-style: solid;
+                border-color: black;
+                border-width: 2px;
+
+                height: auto;
+                text-align: left;
+            }
+
+            tr:hover td,
+            tr:hover div {
+                background-color: white;
+                color: black;
+                cursor: pointer;
+            }
+
+            tr.row-active td,
+            tr.row-active div {
+                background-color: #d9d9d9;
+                color: #6e7173;
+                cursor: pointer;
+            }
+        }
+    }
+
+    @@media print {
+        .for-print {
+            display: inline;
+        }
+
+        .map-style {
+            width: auto;
+            height: auto;
+        }
+
+        .page-break-before {
+            display: block;
+            break-before: page;
+        }
+
+        .page-break-after {
+            display: block;
+            break-after: page;
+        }
+
+        .page-break-inside {
+            display: block;
+            break-inside: avoid;
+        }
+
+        body {
+            width: auto;
+            height: auto;
+            margin-left: 30px;
+        }
+    }
+</style>
+
+<div class="standard-style">
+    @if (layoutData != null)
+    {
+        count = 2;
+        posX1 = 40;
+        posY1 = 10;
+        minBoxes = 0;
+        maxBoxes = 12;
+        posX2 = 40;
+        posY2 = posY1 + 70;
+
+        if (hiddenStyle1 != string.Empty)
+        {
+            posY1 = 120;
+            posY2 = posY1 + 70;
+        }
+
+        posX3 = posX1;
+        posY3 = posY1;
+
+        for (int i = 0; i < 6; i++)
+        {
+            htmlStyle1 = $"z-index: 2; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "SKU"
+                && ParentVariable2?.ContainerType != "GL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1">
+                <div class="gapRight gapBottom" style="@hiddenStyle2">
+                    <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                        @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                        @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                        @ondragleave="() => HandleDragLeave()">
+                        <div class="box-top" style="@boxStyle1">
+                            @if (layoutData.LineData[index].ContainerType != "NA")
+                            {
+                                <div class="text-center no-select" style="@textStyle1">
+                                    @layoutData.LineData[index].ContainerType
+                                </div>
+                            }
+                        </div>
+                        <div class="box-text" style="@gotTableStyle">
+                            <div class="text-center no-select">
+                                @layoutData.LineData[index].Point
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        if (ParentVariable4
+                        && layoutData.LineData[index].ContainerType != "FG"
+                        && layoutData.LineData[index].ContainerType != "GL"
+                        && orderKit != null
+                        )
+                        {
+                            <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                                @orderKit!.OrderKitData[index].PartNumber
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            htmlStyle2 = $"z-index: 2; position: absolute; left: {posX2}px; top: {posY2}px;";
+            bool canDrop2 = (layoutData.LineData[index].TableCanDrop && !ParentVariable3);
+            boxStyle2 = $"background-color: {layoutData.LineData[index].TableBoxColor};";
+            textStyle2 = $"color: {layoutData.LineData[index].TableFontColor};";
+            hiddenStyle3 = "";
+
+            if (ParentVariable3 && layoutData.LineData[index].TableType == "NA")
+                hiddenStyle3 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA"
+                    || layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "TBL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop2 = false;
+                }
+            }
+            else
+            {
+                canDrop2 = false;
+            }
+
+            <div style="@htmlStyle2">
+                <div class="box-table" style="@boxStyle2 @hiddenStyle3"
+                    ondragover="@((canDrop2) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop2(layoutData.LineData[index])">
+                    @if (layoutData.LineData[index].TableType != "NA")
+                    {
+                        <div class="text-center no-select" style="@textStyle2">
+                            @layoutData.LineData[index].TableType
+                        </div>
+                    }
+                </div>
+            </div>
+
+            count += 2;
+            posX1 += 80;
+            posX2 += 80;
+            posX3 = posX1;
+        }
+
+        count = 1;
+        posX1 = 0;
+        posY1 = 120;
+        minBoxes = 0;
+        maxBoxes = 12;
+        posX2 = 0;
+        posY2 = posY1 + 70;
+        posX3 = posX1;
+        posY3 = posY1;
+
+        for (int i = 0; i < 7; i++)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "SKU"
+                && ParentVariable2?.ContainerType != "GL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1">
+                <div class="gapRight gapBottom" style="@hiddenStyle2">
+                    <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                        @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                        @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                        @ondragleave="() => HandleDragLeave()">
+                        <div class="box-top" style="@boxStyle1">
+                            @if (layoutData.LineData[index].ContainerType != "NA")
+                            {
+                                <div class="text-center no-select" style="@textStyle1">
+                                    @layoutData.LineData[index].ContainerType
+                                </div>
+                            }
+                        </div>
+                        <div class="box-text" style="@gotTableStyle">
+                            <div class="text-center no-select">
+                                @layoutData.LineData[index].Point
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        if (ParentVariable4
+                        && layoutData.LineData[index].ContainerType != "FG"
+                        && layoutData.LineData[index].ContainerType != "GL"
+                        && orderKit != null
+                        )
+                        {
+                            <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                                @orderKit!.OrderKitData[index].PartNumber
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            htmlStyle2 = $"z-index: 2; position: absolute; left: {posX2}px; top: {posY2}px;";
+            bool canDrop2 = (layoutData.LineData[index].TableCanDrop && !ParentVariable3);
+            boxStyle2 = $"background-color: {layoutData.LineData[index].TableBoxColor};";
+            textStyle2 = $"color: {layoutData.LineData[index].TableFontColor};";
+            hiddenStyle3 = "";
+
+            if (ParentVariable3 && layoutData.LineData[index].TableType == "NA")
+                hiddenStyle3 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA"
+                    || layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "TBL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop2 = false;
+                }
+            }
+            else
+            {
+                canDrop2 = false;
+            }
+
+            <div style="@htmlStyle2">
+                <div class="box-table" style="@boxStyle2 @hiddenStyle3"
+                    ondragover="@((canDrop2) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop2(layoutData.LineData[index])"> @if (layoutData.LineData[index].TableType != "NA")
+                    {
+                        <div class="text-center no-select" style="@textStyle2">
+                            @layoutData.LineData[index].TableType
+                        </div>
+                    }
+                </div>
+            </div>
+
+            count += 2;
+            posX1 += 80;
+            posX2 += 80;
+            posX3 = posX1;
+        }
+
+        count = 27;
+        posX1 = 600;
+        posY1 = 115;
+        minBoxes = -1;
+        maxBoxes = -1;
+        posX3 = posX1;
+        posY3 = posY1;
+
+        if (true)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "FG"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1 @hiddenStyle2">
+                <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                    @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                    @ondragleave="() => HandleDragLeave()">
+                    <div class="box-top" style="@boxStyle1">
+                        @if (layoutData.LineData[index].ContainerType != "NA")
+                        {
+                            <div class="text-center no-select" style="@textStyle1">
+                                @layoutData.LineData[index].ContainerType
+                            </div>
+                        }
+                    </div>
+                    <div class="box-text" style="@gotTableStyle">
+                        <div class="text-center no-select">
+                            @layoutData.LineData[index].Point
+                        </div>
+                    </div>
+                </div>
+                @{
+                    if (ParentVariable4
+                    && layoutData.LineData[index].ContainerType != "FG"
+                    && layoutData.LineData[index].ContainerType != "GL"
+                    && orderKit != null
+                    )
+                    {
+                        <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                            @orderKit!.OrderKitData[index].PartNumber
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        posX1 = 0;
+        posY1 = 230;
+        htmlStyle1 = $"z-index: 0; position: absolute; left: {posX1}px; top: {posY1}px;";
+
+        <div style="@htmlStyle1">
+            <div class="conveyor">
+                <div class="text-center no-select" style="color: white">
+                    Standard
+                </div>
+            </div>
+        </div>
+
+        count = 28;
+        posX1 = 600;
+        posY1 = 185;
+        minBoxes = -1;
+        maxBoxes = -1;
+        posX3 = posX1;
+        posY3 = posY1;
+
+        if (true)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "FG"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1 @hiddenStyle2">
+                <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                    @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                    @ondragleave="() => HandleDragLeave()">
+                    <div class="box-top" style="@boxStyle1">
+                        @if (layoutData.LineData[index].ContainerType != "NA")
+                        {
+                            <div class="text-center no-select" style="@textStyle1">
+                                @layoutData.LineData[index].ContainerType
+                            </div>
+                        }
+                    </div>
+                    <div class="box-text" style="@gotTableStyle">
+                        <div class="text-center no-select">
+                            @layoutData.LineData[index].Point
+                        </div>
+                    </div>
+                </div>
+                @{
+                    if (ParentVariable4
+                    && layoutData.LineData[index].ContainerType != "FG"
+                    && layoutData.LineData[index].ContainerType != "GL"
+                    && orderKit != null
+                    )
+                    {
+                        <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                            @orderKit!.OrderKitData[index].PartNumber
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        count = 14;
+        posX1 = 0;
+        posY1 = 320;
+        minBoxes = 13;
+        maxBoxes = 25;
+        posX2 = 0;
+        posY2 = posY1 - 40;
+        posX3 = posX1;
+        posY3 = posY1 + 50;
+
+        for (int i = 0; i < 7; i++)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "SKU"
+                && ParentVariable2?.ContainerType != "GL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1">
+                <div class="gapRight gapBottom" style="@hiddenStyle2">
+                    <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                        @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                        @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                        @ondragleave="() => HandleDragLeave()">
+                        <div class="box-text" style="@gotTableStyle">
+                            <div class="text-center no-select">
+                                @layoutData.LineData[index].Point
+                            </div>
+                        </div>
+                        <div class="box-top" style="@boxStyle1">
+                            @if (layoutData.LineData[index].ContainerType != "NA")
+                            {
+                                <div class="text-center no-select" style="@textStyle1">
+                                    @layoutData.LineData[index].ContainerType
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @{
+                        if (ParentVariable4
+                        && layoutData.LineData[index].ContainerType != "FG"
+                        && layoutData.LineData[index].ContainerType != "GL"
+                        && orderKit != null
+                        )
+                        {
+                            <div class="custom-wrap no-select" style="position: absolute; top: 62px; line-height: 1;">
+                                @orderKit!.OrderKitData[index].PartNumber
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            htmlStyle2 = $"z-index: 2; position: absolute; left: {posX2}px; top: {posY2}px;";
+            bool canDrop2 = (layoutData.LineData[index].TableCanDrop && !ParentVariable3);
+            boxStyle2 = $"background-color: {layoutData.LineData[index].TableBoxColor};";
+            textStyle2 = $"color: {layoutData.LineData[index].TableFontColor};";
+            hiddenStyle3 = "";
+
+            if (ParentVariable3 && layoutData.LineData[index].TableType == "NA")
+                hiddenStyle3 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA"
+                    || layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "TBL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop2 = false;
+                }
+            }
+            else
+            {
+                canDrop2 = false;
+            }
+
+            <div style="@htmlStyle2">
+                <div class="box-table" style="@boxStyle2 @hiddenStyle3"
+                    ondragover="@((canDrop2) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop2(layoutData.LineData[index])">
+                    @if (layoutData.LineData[index].TableType != "NA")
+                    {
+                        <div class="text-center no-select" style="@textStyle2">
+                            @layoutData.LineData[index].TableType
+                        </div>
+                    }
+                </div>
+            </div>
+
+            count += 2;
+            posX1 += 80;
+            posX2 += 80;
+            posX3 = posX1;
+        }
+
+        count = 29;
+        posX1 = 600;
+        posY1 = 255;
+        minBoxes = -1;
+        maxBoxes = -1;
+        posX3 = posX1;
+        posY3 = posY1;
+
+        if (true)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "FG"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1 @hiddenStyle2">
+                <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                    @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                    @ondragleave="() => HandleDragLeave()">
+                    <div class="box-top" style="@boxStyle1">
+                        @if (layoutData.LineData[index].ContainerType != "NA")
+                        {
+                            <div class="text-center no-select" style="@textStyle1">
+                                @layoutData.LineData[index].ContainerType
+                            </div>
+                        }
+                    </div>
+                    <div class="box-text" style="@gotTableStyle">
+                        <div class="text-center no-select">
+                            @layoutData.LineData[index].Point
+                        </div>
+                    </div>
+                </div>
+                @{
+                    if (ParentVariable4
+                    && layoutData.LineData[index].ContainerType != "FG"
+                    && layoutData.LineData[index].ContainerType != "GL"
+                    && orderKit != null
+                    )
+                    {
+                        <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                            @orderKit!.OrderKitData[index].PartNumber
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        count = 30;
+        posX1 = 600;
+        posY1 = 325;
+        minBoxes = -1;
+        maxBoxes = -1;
+        posX3 = posX1;
+        posY3 = posY1;
+
+        if (true)
+        {
+            htmlStyle1 = $"z-index: 1; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "FG"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1 @hiddenStyle2">
+                <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                    @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                    @ondragleave="() => HandleDragLeave()">
+                    <div class="box-top" style="@boxStyle1">
+                        @if (layoutData.LineData[index].ContainerType != "NA")
+                        {
+                            <div class="text-center no-select" style="@textStyle1">
+                                @layoutData.LineData[index].ContainerType
+                            </div>
+                        }
+                    </div>
+                    <div class="box-text" style="@gotTableStyle">
+                        <div class="text-center no-select">
+                            @layoutData.LineData[index].Point
+                        </div>
+                    </div>
+                </div>
+                @{
+                    if (ParentVariable4
+                    && layoutData.LineData[index].ContainerType != "FG"
+                    && layoutData.LineData[index].ContainerType != "GL"
+                    && orderKit != null
+                    )
+                    {
+                        <div class="custom-wrap no-select" style="position: absolute; top: -36px; line-height: 1;">
+                            @orderKit!.OrderKitData[index].PartNumber
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        count = 15;
+        posX1 = 40;
+        posY1 = 430;
+        minBoxes = 13;
+        maxBoxes = 25;
+        posX2 = 40;
+        posY2 = posY1 - 40;
+
+        if (hiddenStyle1 != string.Empty)
+        {
+            posY1 = 320;
+            posY2 = posY1 - 40;
+        }
+
+        posX3 = posX1;
+        posY3 = posY1 + 50;
+
+        for (int i = 0; i < 6; i++)
+        {
+            htmlStyle1 = $"z-index: 2; position: absolute; left: {posX1}px; top: {posY1}px;";
+            htmlStyle3 = $"z-index: 5; position: absolute; left: {posX3}px; top: {posY3}px;";
+            int index = count - 1;
+            bool canDrop = (layoutData.LineData[index].CanDrop && (!ParentVariable3 || ParentVariable4));
+            boxStyle1 = $"background-color: {layoutData.LineData[index].BoxColor};";
+            textStyle1 = $"color: {layoutData.LineData[index].FontColor};";
+            hiddenStyle2 = "";
+            hiddenStyle4 = "";
+            gotTableStyle = layoutData.LineData[index].GotTableColor;
+            gotCommandStyle = layoutData.LineData[index].GotCommandColor;
+
+            if (ParentVariable3 && layoutData.LineData[index].ContainerType == "NA")
+                hiddenStyle2 = "display: none;";
+
+            if ((ParentVariable7 && layoutData.LineData[index].ContainerType == "NA")
+            || !ParentVariable7
+            || string.IsNullOrWhiteSpace(gotCommandStyle))
+                hiddenStyle4 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA"
+                    || layoutData.LineData[index + 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].ContainerType != "NA")
+                    {
+                        canDrop = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "SKU"
+                && ParentVariable2?.ContainerType != "GL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop = false;
+                }
+            }
+            else
+            {
+                if (layoutData.LineData[index].ContainerType == "GL"
+                || layoutData.LineData[index].ContainerType == "FG"
+                || layoutData.LineData[index].ContainerType == "NA")
+                {
+                    canDrop = false;
+                }
+            }
+
+            <div style="@htmlStyle3 @hiddenStyle4">
+                <div class="box-command" style="@gotCommandStyle">
+                </div>
+            </div>
+            <div style="@htmlStyle1">
+                <div class="gapRight gapBottom" style="@hiddenStyle2">
+                    <div class="box-outer" ondragover="@((canDrop) ? "event.preventDefault();" : "")"
+                        @ondrop="() => HandleDrop(layoutData.LineData[index])"
+                        @onclick="() => OnClickBox(layoutData.LineData[index])" @ondragenter="() => HandleDragEnter()"
+                        @ondragleave="() => HandleDragLeave()">
+                        <div class="box-text" style="@gotTableStyle">
+                            <div class="text-center no-select">
+                                @layoutData.LineData[index].Point
+                            </div>
+                        </div>
+                        <div class="box-top" style="@boxStyle1">
+                            @if (layoutData.LineData[index].ContainerType != "NA")
+                            {
+                                <div class="text-center no-select" style="@textStyle1">
+                                    @layoutData.LineData[index].ContainerType
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @{
+                        if (ParentVariable4
+                        && layoutData.LineData[index].ContainerType != "FG"
+                        && layoutData.LineData[index].ContainerType != "GL"
+                        && orderKit != null
+                        )
+                        {
+                            <div class="custom-wrap no-select" style="position: absolute; top: 62px; line-height: 1;">
+                                @orderKit!.OrderKitData[index].PartNumber
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            htmlStyle2 = $"z-index: 2; position: absolute; left: {posX2}px; top: {posY2}px;";
+            bool canDrop2 = (layoutData.LineData[index].TableCanDrop && !ParentVariable3);
+            boxStyle2 = $"background-color: {layoutData.LineData[index].TableBoxColor};";
+            textStyle2 = $"color: {layoutData.LineData[index].TableFontColor};";
+            hiddenStyle3 = "";
+
+            if (ParentVariable3 && layoutData.LineData[index].TableType == "NA")
+                hiddenStyle3 = "display: none;";
+
+            if (!ParentVariable4)
+            {
+                if (ParentVariable2?.ContainerType == "NA")
+                {
+
+                }
+                else if (index == minBoxes)
+                {
+                    if (layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index > minBoxes && index < maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA"
+                    || layoutData.LineData[index + 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+                else if (index == maxBoxes)
+                {
+                    if (layoutData.LineData[index - 1].TableType != "NA")
+                    {
+                        canDrop2 = false;
+                    }
+                }
+
+                if (ParentVariable2?.ContainerType != "TBL"
+                && ParentVariable2?.ContainerType != "NA")
+                {
+                    canDrop2 = false;
+                }
+            }
+            else
+            {
+                canDrop2 = false;
+            }
+
+            <div style="@htmlStyle2">
+                <div class="box-table" style="@boxStyle2 @hiddenStyle3"
+                    ondragover="@((canDrop2) ? "event.preventDefault();" : "")"
+                    @ondrop="() => HandleDrop2(layoutData.LineData[index])">
+                    @if (layoutData.LineData[index].TableType != "NA")
+                    {
+                        <div class="text-center no-select" style="@textStyle2">
+                            @layoutData.LineData[index].TableType
+                        </div>
+                    }
+                </div>
+            </div>
+
+            count += 2;
+            posX1 += 80;
+            posX2 += 80;
+            posX3 = posX1;
+        }
+
+        if (!ParentVariable3)
+        {
+            posX1 = 65;
+            posY1 = 70;
+            htmlStyle1 = $"position: absolute; left: {posX1}px; top: {posY1}px;";
+
+            <div style="@htmlStyle1">
+                <div class="segmentRow">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <div class="segmentColumn">
+                            <div class="dotted-line-container"></div>
+                            <div class="resizable-dot"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            posX1 = 65;
+            posY1 = 330;
+            htmlStyle1 = $"position: absolute; left: {posX1}px; top: {posY1}px;";
+
+            <div style="@htmlStyle1">
+                <div class="segmentRow">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <div class="segmentColumn">
+                            <div class="resizable-dot"></div>
+                            <div class="dotted-line-container"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

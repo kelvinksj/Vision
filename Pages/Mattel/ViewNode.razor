@@ -1,0 +1,539 @@
+@page "/Mattel/ViewNode"
+@rendermode InteractiveServer
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+
+<style>
+    .pop-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: 700px;
+            width: 1000px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: .3rem;
+            outline: 0;
+        }
+
+        .box1 {
+            height: auto;
+            width: 100%;
+            text-align: center;
+            background: rgba(110, 113, 115, 1);
+            color: rgba(217, 217, 217, 1);
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: calc(.3rem - 1px);
+            border-top-right-radius: calc(.3rem - 1px);
+        }
+
+        .header {
+            color: rgba(217, 217, 217, 1);
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+            font-size: 36px;
+        }
+
+        .label {
+            font-size: 20x;
+            font-weight: bold;
+            color: rgba(110, 113, 115, 1);
+            margin-top: 10px;
+        }
+
+        .input-style {
+            width: auto;
+            background-color: rgba(217, 217, 217, 1);
+        }
+
+        .icon_dropdown {
+            display: inline-block;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 12px;
+            padding-right: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .ViewNode-style {
+        width: auto;
+        height: auto;
+        position: absolute;
+        border: 1px solid red;
+
+        .box-outer {
+            --outer-height: 10px;
+            --outer-width: 10px;
+            --outer-width-value: 10;
+            --title-header: 0.2;
+            --title-height: 0.6;
+            --text-ratio: calc(var(--outer-width-value) / 100);
+            height: var(--outer-height);
+            width: var(--outer-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+
+            .box-header {
+                height: calc((var(--outer-height) * var(--title-header)));
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-top {
+                height: calc((var(--outer-height) * var(--title-height)) - 1px);
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-text {
+                height: calc((var(--outer-height) * (1 - var(--title-header) - var(--title-height))) - 1px);
+                width: 100%;
+                background-color: white;
+            }
+
+            .text-center {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                font-size: calc(var(--text-ratio) * 1rem);
+            }
+        }
+
+        .icon_box {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .load_box {
+            height: calc(100% - 30%);
+            width: calc(100% - 20%);
+        }
+
+        .icon_x_red {
+            width: calc(100% - 30%);
+            height: calc(100% - 30%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .scale-element {
+            transform: scale(1);
+            transform-origin: top left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .scale-element:hover {
+            transform: scale(0.1);
+        }
+    }
+
+    #mapWrapper {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: auto;
+        border: 0px solid blue;
+    }
+
+    #mapContainer {
+        transform-origin: 0 0;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        cursor: grab;
+        overflow: hidden;
+        border: 2px solid black;
+    }
+
+    #mapContent {
+        width: 1600px;
+        height: 1400px;
+        position: relative;
+        background-color: #f0f0f0;
+        border: 0px solid green;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .custom-select {
+            width: 300px;
+            background-color: rgba(217, 217, 217, 1);
+        }
+
+        .custom-select-arrow {
+            position: absolute;
+            right: 7px;
+            top: 7px;
+            pointer-events: none;
+        }
+    }
+</style>
+
+<script>
+    window.initializeMap = () => {
+        let mapContainer = document.getElementById('mapContainer');
+        let mapContent = document.getElementById('mapContent');
+        let mapWrapper = document.getElementById('mapWrapper');
+        let isDragging = false;
+        let startX, startY, initialTransformX, initialTransformY;
+        let scale = 1;
+        let minScale = 1;
+        let maxScale = 10;
+        let isMovePending = false;
+
+        // Calculate the center position
+        const centerX = (mapContent.offsetWidth - mapWrapper.offsetWidth) / 2;
+        const centerY = (mapContent.offsetHeight - mapWrapper.offsetHeight) / 2;
+
+        // Set initial transform state
+        let transformX = -centerX, transformY = -centerY;
+        mapContent.style.transform = `translate(${transformX}px, ${transformY}px) scale(${scale})`;
+
+        // Feature detection for touch events
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // Drag move handling function
+        const handleDragMove = (x, y) => {
+            if (!isDragging) return;
+            if (isMovePending) return;
+
+            isMovePending = true;
+            requestAnimationFrame(() => {
+                const walkX = (x - startX);
+                const walkY = (y - startY);
+                transformX = initialTransformX + walkX;
+                transformY = initialTransformY + walkY;
+                mapContent.style.transform = `translate(${transformX}px, ${transformY}px) scale(${scale})`;
+                isMovePending = false;
+            });
+        };
+
+        // Before start drag move handling function
+        const handleDragStart = (x, y) => {
+            isDragging = true;
+            mapContainer.style.cursor = 'grabbing';
+            startX = x;
+            startY = y;
+            initialTransformX = transformX;
+            initialTransformY = transformY;
+        };
+
+        // Zoom handling function
+        const handleZoom = (deltaScale, offsetX, offsetY) => {
+            const newScale = Math.max(minScale, Math.min(maxScale, scale * deltaScale));
+            const scaleDelta = newScale / scale;
+
+            // Calculate the new transform values to keep the zoom point at the cursor
+            const newTransformX = offsetX * scaleDelta - offsetX;
+            const newTransformY = offsetY * scaleDelta - offsetY;
+            //2const newTransformX = offsetX * (scaleDelta - 1);
+            //2const newTransformY = offsetY * (scaleDelta - 1);
+            //3const newTransformX = offsetX - (offsetX * scaleDelta);
+            //3const newTransformY = offsetY - (offsetY * scaleDelta);
+            //4const newTransformX = offsetX * (1 - scaleDelta);
+            //4const newTransformY = offsetY * (1 - scaleDelta);
+            //5const newTransformX = transformX + offsetX * (scaleDelta - 1);
+            //5const newTransformY = transformY + offsetY * (scaleDelta - 1);
+
+            // Update the transform and scale
+            transformX += (newTransformX * (scaleDelta - 1));
+            transformY += (newTransformY * (scaleDelta - 1));
+            //2transformX += newTransformX;
+            //2transformY += newTransformY;
+            //3transformX -= newTransformX;
+            //3transformY -= newTransformY;
+            //4transformX += newTransformX;
+            //4transformY += newTransformY;
+            //5transformX = newTransformX;
+            //5transformY = newTransformY;
+            scale = newScale;
+            mapContent.style.transform = `translate(${transformX}px, ${transformY}px) scale(${scale})`;
+        };
+
+        if (isTouchDevice) {
+            // Touch events for touch devices
+            mapContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    handleDragStart(touch.pageX, touch.pageY);
+                };
+            });
+
+            mapContainer.addEventListener('touchend', () => {
+                isDragging = false;
+                mapContainer.style.cursor = 'grab';
+            });
+
+            mapContainer.addEventListener('touchcancel', () => {
+                isDragging = false;
+                mapContainer.style.cursor = 'grab';
+            });
+
+            mapContainer.addEventListener('touchmove', (e) => {
+                if (!isDragging || e.touches.length !== 1) return;
+
+                e.preventDefault();
+                const touch = e.touches[0];
+                handleDragMove(touch.pageX, touch.pageY);
+            }, { passive: false });
+
+            // Pinch to zoom
+            let initialDistance = null;
+            mapContainer.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touch1 = e.touches[0];
+                    const touch2 = e.touches[1];
+                    const currentDistance =
+                        Math.hypot(
+                            touch2.pageX - touch1.pageX,
+                            touch2.pageY - touch1.pageY
+                        );
+
+                    if (initialDistance === null) {
+                        initialDistance = currentDistance;
+                    } else {
+                        const deltaScale = currentDistance / initialDistance;
+                        initialDistance = currentDistance;
+                        const rect = mapContent.getBoundingClientRect();
+                        const centerX = (touch1.pageX + touch2.pageX) / 2;
+                        const centerY = (touch1.pageY + touch2.pageY) / 2;
+
+                        // Calculate the offset positions relative to the current scale
+                        const offsetX = (centerX - transformX) / scale;
+                        const offsetY = (centerY - transformY) / scale;
+
+                        handleZoom(deltaScale, offsetX, offsetY);
+                    }
+                } else {
+                    initialDistance = null;
+                }
+            }, { passive: false });
+        } else {
+            // Mouse events for non-touch devices
+            mapContainer.addEventListener('mousedown', (e) => {
+                handleDragStart(e.pageX, e.pageY);
+            });
+
+            mapContainer.addEventListener('mouseup', () => {
+                isDragging = false;
+                mapContainer.style.cursor = 'grab';
+            });
+
+            mapContainer.addEventListener('mouseleave', () => {
+                isDragging = false;
+                mapContainer.style.cursor = 'grab';
+            });
+
+            mapContainer.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                e.preventDefault();
+                handleDragMove(e.pageX, e.pageY);
+            }, { passive: false });
+
+            // Wheel to zoom 
+            mapContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const rect = mapContent.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                const deltaScale = e.deltaY > 0 ? 0.9 : 1.1;
+
+                // Calculate the offset positions relative to the current scale
+                const offsetX = (mouseX - transformX) / scale;
+                const offsetY = (mouseY - transformY) / scale;
+
+                handleZoom(deltaScale, offsetX, offsetY);
+            }, { passive: false });
+        }
+    };
+</script>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor">
+    <Authorized>
+        <div class="pop-overlay">
+            <div class="pop-content">
+                <div class="box1">
+                    <h1 id="MyHeader" class="header no-select">
+                        Move Robot Manually
+                    </h1>
+                </div>
+                <EditForm Model="@seletedArea" OnValidSubmit="() => OnValidSubmit()" autocomplete="off"
+                    Context="editContext">
+                    <DataAnnotationsValidator />
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Area:</label>
+                        <div class="custom-select-wrapper">
+                            <InputSelect @bind-Value="seletedArea.ID" class="form-control custom-select no-select"
+                                placeholder="Area" autocomplete="off"
+                                @bind-Value:after="() => HandleOnChange(seletedArea.ID)">
+                                @foreach (var area in layoutAreaList.LayoutArea)
+                                {
+                                    if (!area.Description.Contains("maintenance", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <option class="no-select" value="@area.ID">
+                                            @area.Description
+                                        </option>
+                                    }
+                                }
+                            </InputSelect>
+                            <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </EditForm>
+                <div id="mapWrapper">
+                    <div id="mapContainer">
+                        <div id="mapContent">
+                            <div class="ViewNode-style">
+                                @if (filterNodeList?.List?.Any() ?? false)
+                                {
+                                    var minX = filterNodeList.List.Min(n => n.X);
+                                    var maxX = filterNodeList.List.Max(n => n.X);
+                                    var minY = filterNodeList.List.Min(n => n.Y);
+                                    var maxY = filterNodeList.List.Max(n => n.Y);
+
+                                    CommonLib.DisplayConsole(
+                                    taskName,
+                                    $"html minX={minX}",
+                                    settingLevel,
+                                    MessageLevel.Information
+                                    );
+                                    CommonLib.DisplayConsole(
+                                    taskName,
+                                    $"html maxX={maxX}",
+                                    settingLevel,
+                                    MessageLevel.Information
+                                    );
+                                    CommonLib.DisplayConsole(
+                                    taskName,
+                                    $"html minY={minY}",
+                                    settingLevel,
+                                    MessageLevel.Information
+                                    );
+                                    CommonLib.DisplayConsole(
+                                    taskName,
+                                    $"html maxY={maxY}",
+                                    settingLevel,
+                                    MessageLevel.Information
+                                    );
+
+                                    foreach (var item in filterNodeList.List)
+                                    {
+                                        posX = (item.X - minX + 500) / 50;
+                                        posY = (item.Y - minY + 500) / 50;
+                                        htmlStyle1 = $"z-index: 0; position: absolute; left: {posX}px; bottom: {posY}px;";
+                                        contentType = string.IsNullOrWhiteSpace(item.ShelfData.ShelfNum) ? "Empty" : "Table";
+
+                                        <div class="box-outer" style="@htmlStyle1 cursor: pointer; pointer-events: all;"
+                                            @onclick="() => OnClickBox(item)">
+                                            <div class="box-header" style="background-color: white; color: black;">
+                                                <div class="text-center no-select">
+                                                    @item.Content
+                                                </div>
+                                            </div>
+                                            <div class="box-top">
+                                                @if (contentType == "CheckOut")
+                                                {
+                                                    <div class="icon_box" style="background-color: #bad0fb;">
+                                                        <div class="icon_x_red" style="background-color: #bad0fb;" />
+                                                    </div>
+                                                }
+                                                else if (contentType == "LoadOut")
+                                                {
+                                                    <div class="icon_box" style="background-color: #bad0fb;">
+                                                        <div class="load_box" style="background-color: #fbe9d0;" />
+                                                    </div>
+                                                }
+                                                else if (contentType == "Empty")
+                                                {
+                                                    <div class="icon_box" style="background-color: #d9d9d9;" />
+                                                }
+                                                else if (contentType == "Table")
+                                                {
+                                                    <div class="icon_box" style="background-color: #fd9448;" />
+                                                }
+                                                else if (contentType == "Loaded"
+                                                || contentType == "Full")
+                                                {
+                                                    <div class="icon_box" style="background-color: #fd9448;">
+                                                        <div class="load_box" style="background-color: #fbe9d0;" />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="icon_box" style="background-color: red;" />
+                                                }
+                                            </div>
+                                            <div class="box-text">
+                                                <div class="text-center no-select">
+                                                    @item.Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="segmentColumn gapBottom">
+                    <label class="label no-select">Click the targeted position to move</label>
+                    <div class="segmentRow">
+                        <input class="form-control no-select gapRight" @bind="selectedPosition.Content" maxlength="15"
+                            autocomplete="off" disabled=true />
+                        <button type="button" class="btn btn-sm common-btn gapRight" style="@disableStyle"
+                            disabled="@disableBtn" @onclick="() => OnClickSubmit()">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-sm common-btn" @onclick="() => OnClickCancel()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center" />
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

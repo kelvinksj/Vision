@@ -1,0 +1,225 @@
+{
+  "OrderKit": [
+    {
+      "ID": 1,
+      "OrderKitNumber": "P-432441",
+      "Description": "",
+      "LayoutName": "B-5",
+      "KitNumber": "P-432441",
+      "CreatedData": "2025-02-12T00:27:45.2253377+08:00",
+      "OrderKitData": [
+        {
+          "ID": 1,
+          "Point": "0021",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 2,
+          "Point": "0022",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 3,
+          "Point": "0023",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 4,
+          "Point": "0024",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 5,
+          "Point": "0025",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 6,
+          "Point": "0026",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 7,
+          "Point": "0027",
+          "PartNumber": "C4982-99JQ",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 8,
+          "Point": "0028",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 9,
+          "Point": "0029",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 10,
+          "Point": "0030",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 11,
+          "Point": "0031",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 12,
+          "Point": "0032",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 13,
+          "Point": "0033",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 14,
+          "Point": "0041",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 15,
+          "Point": "0042",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 16,
+          "Point": "0043",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 17,
+          "Point": "0044",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 18,
+          "Point": "0045",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 19,
+          "Point": "0046",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 20,
+          "Point": "0047",
+          "PartNumber": "C4982-99JQ",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 21,
+          "Point": "0048",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 22,
+          "Point": "0049",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 23,
+          "Point": "0050",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 24,
+          "Point": "0051",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 25,
+          "Point": "0052",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 26,
+          "Point": "0053",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 27,
+          "Point": "1001",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 28,
+          "Point": "1002",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 29,
+          "Point": "1003",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        },
+        {
+          "ID": 30,
+          "Point": "1004",
+          "PartNumber": "",
+          "Description": "",
+          "CanDrop": true
+        }
+      ],
+      "Status": "Production"
+    }
+  ]
+}

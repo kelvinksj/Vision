@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\common.css",
+      "PackagePath": "staticwebassets\\common.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\fonts\\Aptos.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Aptos.ttf"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\icons\\Icon.css",
+      "PackagePath": "staticwebassets\\icons\\Icon.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\AMR.png",
+      "PackagePath": "staticwebassets\\images\\AMR.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\Country1.png",
+      "PackagePath": "staticwebassets\\images\\Country1.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\Country2.png",
+      "PackagePath": "staticwebassets\\images\\Country2.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\DallasRoboterLogo.png",
+      "PackagePath": "staticwebassets\\images\\DallasRoboterLogo.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\DallasRoboterLogoOnly.png",
+      "PackagePath": "staticwebassets\\images\\DallasRoboterLogoOnly.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\images\\Location.png",
+      "PackagePath": "staticwebassets\\images\\Location.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\js\\Global.js",
+      "PackagePath": "staticwebassets\\js\\Global.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\js\\Keyboard.js",
+      "PackagePath": "staticwebassets\\js\\Keyboard.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\js\\ScreenWakeLock.js",
+      "PackagePath": "staticwebassets\\js\\ScreenWakeLock.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\js\\Worker.js",
+      "PackagePath": "staticwebassets\\js\\Worker.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\js\\WorkerManager.js",
+      "PackagePath": "staticwebassets\\js\\WorkerManager.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\0120-UI-Manager-G2\\wwwroot\\sound\\file_example_WAV_1MG.wav",
+      "PackagePath": "staticwebassets\\sound\\file_example_WAV_1MG.wav"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TaskManagerWeb.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.TaskManagerWeb.props",
+      "PackagePath": "build\\TaskManagerWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.TaskManagerWeb.props",
+      "PackagePath": "buildMultiTargeting\\TaskManagerWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.TaskManagerWeb.props",
+      "PackagePath": "buildTransitive\\TaskManagerWeb.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

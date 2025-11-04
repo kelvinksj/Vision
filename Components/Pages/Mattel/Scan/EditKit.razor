@@ -1,0 +1,47 @@
+@page "/Mattel/Scan/EditKit"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject WorkerService WorkerService
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject CommonLib CommonLib
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+
+<style>
+    .input-style {
+        width: 250px;
+        background-color: rgba(217, 217, 217, 1);
+        border-bottom: none;
+    }
+
+    .modal-content {
+        width: 400px;
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<div class="box2">
+    <div class="segmentColumn">
+        <EditForm Model="@EditKitData" OnValidSubmit="Confirm" autocomplete="off" Context="editContext">
+            <DataAnnotationsValidator />
+            <div class="segmentColumn gapBottom">
+                <label class="no-select">Current Value</label>
+                <input class="form-control input-style" maxlength="15" value="@CurrentKit" disabled />
+            </div>
+            <div class="segmentColumn gapBottom">
+                <label class="no-select">New Value</label>
+                <input @bind="NewKit" class="form-control input-style" @oninput="CheckInput" maxlength="15"
+                    autocomplete="off" />
+            </div>
+        </EditForm>
+        <div class="segmentRow gapBottom">
+            <button type="button" @onclick="Confirm" class="btn btn-sm common-btn gapRight" style="@ConfirmButtonColor"
+                disabled="@string.IsNullOrWhiteSpace(EditKitData.KitNumber)">
+                Confirm
+            </button>
+            <button type="button" @onclick="CloseModal" class="btn btn-sm common-btn">Cancel</button>
+        </div>
+    </div>
+</div>

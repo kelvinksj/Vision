@@ -1,0 +1,101 @@
+@page "/Menu/MenuLine"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject UserAccountService UserAccountService
+@inject WorkerService WorkerService
+
+<style>
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    @* gap: 10px; *@
+    }
+
+    .box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 250px;
+        background-color: white;
+        color: white;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: 2px solid black;
+    }
+
+    .box:hover {
+        background-color: rgba(217, 217, 217, 1);
+    }
+
+    .box label {
+        position: absolute;
+        top: 0;
+        margin: 0;
+        background-color: rgba(110, 113, 115, 1);
+        width: 100%;
+        text-align: center;
+        color: white;
+        box-sizing: content-box;
+        border-bottom: 2px solid black;
+        font-size: 28px;
+    }
+
+    .setSVG {
+        margin-top: 50px;
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor,Operator">
+    <Authorized>
+        <div class="outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <h1 id="MyHeader" class="header no-select">
+                        Line Management 
+                    </h1>
+                </div>
+                <div class="inner">
+                    <div class="segmentColumn">
+                        <div class="segmentRow" style="margin-bottom: 45px;">
+                            <div class="box" style="margin-right: 45px;" @onclick="Navigate1">
+                                <label class="no-select">Check In</label>
+                                <div class="icon_forklift_grey setSVG" />
+                            </div>
+                            <div class="box" style="margin-right: 45px;" @onclick="Navigate2">
+                                <label class="no-select">Gaylord</label>
+                                <div class="icon_recycle_grey setSVG" />
+                            </div>
+                            <div class="box" @onclick="Navigate3">
+                                <label class="no-select">Finished Good</label>
+                                <div class="icon_goods_grey setSVG" />
+                            </div>
+                        </div>
+                        <div class="segmentRow">
+                            <div class="box" style="margin-right: 45px;" @onclick="Navigate4">
+                                <label class="no-select">Check Out</label>
+                                <div class="icon_sequence_grey setSVG" />
+                            </div>
+                            <div class="box" @onclick="Navigate5">
+                                <label class="no-select">All Lines</label>
+                                <div class="icon_start_run_grey setSVG" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center"></span>
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

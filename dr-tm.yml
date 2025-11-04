@@ -1,0 +1,20 @@
+services:
+  tm:
+    image: taskmanager:g2_250224p
+    container_name: tm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.124
+    ports:
+      - 20040:20040
+      - 20080:20080
+
+networks:
+  my_network:
+    name: rcs_bridge
+    external: true

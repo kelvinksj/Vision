@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers> -->
+    <IncludeOpenAPIAnalyzers>false</IncludeOpenAPIAnalyzers>
+  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+  <!-- Default value to include JSON files -->
+  <!-- <IncludeJsonFiles>true</IncludeJsonFiles> -->
+  <!-- </PropertyGroup> -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <IncludeJsonFiles>false</IncludeJsonFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GPIO">
+      <HintPath>Components/Dll/GPIO.dll</HintPath>
+      <HintPath>Components/Dll/System.Device.Gpio.dll</HintPath>
+      <HintPath>Components/Dll/Microsoft.Windows.SDK.NET.dll</HintPath>
+      <HintPath>Components/Dll/WinRT.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BarcodeLib"
+                      Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd"
+                      Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices"
+                      Version="8.0.0" />
+    <PackageReference Include="ZXing.Net"
+                      Version="0.16.9" />
+    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility"
+                      Version="0.16.12" />
+  </ItemGroup>
+  <!-- Log the IncludeJsonFiles property value -->
+  <Target Name="LogProperties"
+          BeforeTargets="Build">
+    <Message Text="IncludeJsonFiles: $(IncludeJsonFiles)"
+             Importance="High" />
+    <Message Text="Configuration: $(Configuration)"
+             Importance="High" />
+  </Target>
+  <ItemGroup Condition="'$(IncludeJsonFiles)' == 'false'">
+    <Content Remove="wwwroot\json\**" />
+  </ItemGroup>
+</Project>

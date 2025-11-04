@@ -1,0 +1,137 @@
+[
+  {
+    "UserId": 1,
+    "UserName": "Admin",
+    "FirstName": "Admin",
+    "LastName": "Admin",
+    "UserRole": "Administrator",
+    "Password": "Aa12345*",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 3,
+    "UserName": "pong",
+    "FirstName": "Wei",
+    "LastName": "Xiang",
+    "UserRole": "Administrator",
+    "Password": "Qwer@1234",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 4,
+    "UserName": "liang",
+    "FirstName": "liang",
+    "LastName": "ky",
+    "UserRole": "Administrator",
+    "Password": "liang1",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 5,
+    "UserName": "Kaixuan",
+    "FirstName": "Kx",
+    "LastName": "Lim",
+    "UserRole": "Administrator",
+    "Password": "123456",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 6,
+    "UserName": "oper3",
+    "FirstName": "Line",
+    "LastName": "3",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "L3"
+  },
+  {
+    "UserId": 7,
+    "UserName": "oper1",
+    "FirstName": "Line",
+    "LastName": "1",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "L1"
+  },
+  {
+    "UserId": 8,
+    "UserName": "opercpc",
+    "FirstName": "CPC",
+    "LastName": "CPC",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "CPC"
+  },
+  {
+    "UserId": 9,
+    "UserName": "oper5",
+    "FirstName": "Line",
+    "LastName": "5",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "L5"
+  },
+  {
+    "UserId": 10,
+    "UserName": "Manasa",
+    "FirstName": "Manasa",
+    "LastName": "Desai",
+    "UserRole": "Administrator",
+    "Password": "Manasa@123",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 11,
+    "UserName": "server",
+    "FirstName": "Mattel",
+    "LastName": "Mac",
+    "UserRole": "Engineer",
+    "Password": "Abcd@1234",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 12,
+    "UserName": "operci",
+    "FirstName": "Operator",
+    "LastName": "Check In",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "CI"
+  },
+  {
+    "UserId": 13,
+    "UserName": "operco",
+    "FirstName": "Operator",
+    "LastName": "Check Out",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "CO"
+  },
+  {
+    "UserId": 14,
+    "UserName": "opergl",
+    "FirstName": "Operator",
+    "LastName": "Gaylord",
+    "UserRole": "Operator",
+    "Password": "123456",
+    "Page": "GL"
+  },
+  {
+    "UserId": 15,
+    "UserName": "Eng1",
+    "FirstName": "Engineer",
+    "LastName": "1",
+    "UserRole": "Engineer",
+    "Password": "123456",
+    "Page": "Disable"
+  },
+  {
+    "UserId": 16,
+    "UserName": "Sup1",
+    "FirstName": "Supervisor",
+    "LastName": "1",
+    "UserRole": "Supervisor",
+    "Password": "123456",
+    "Page": "Disable"
+  }
+]

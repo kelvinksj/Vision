@@ -1,0 +1,223 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/Scan/AddKit"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject WorkerService WorkerService
+@inject MattelService MattelService
+@inject IJSRuntime jsRuntime
+@inject CommonLib CommonLib
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<style>
+    .input {
+        margin-right: 20px;
+        background-color: rgba(217, 217, 217, 1);
+        border-color: black;
+        border-radius: 0px;
+        width: 230px;
+        margin-bottom: 20px;
+    }
+
+    .label {
+        font-size: 20px;
+        font-weight: bold;
+        color: rgba(110, 113, 115, 1);
+        margin-top: 10px;
+    }
+
+    .button-add-part,
+    .button-edit-part,
+    .button-rmv-part,
+    .button-save,
+    .button-cancel2 {
+        background-color: rgba(243, 109, 51, 1);
+        border-color: rgba(243, 109, 51, 1);
+        border-radius: 30px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        width: 130px;
+        height: 50px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    .button-add-part:hover,
+    .button-edit-part:hover,
+    .button-rmv-part:hover,
+    .button-save:hover,
+    .button-cancel2:hover {
+        background-color: white;
+        color: black;
+    }
+
+    .modal-header {
+        width: 100%;
+        background: rgba(110, 113, 115, 1);
+        color: rgba(217, 217, 217, 1);
+        padding: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        height: auto;
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-active .top-row,
+    .faded-button {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .active-button {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .table-set {
+        table {
+            th {
+                text-align: left;
+                padding-left: 10px;
+            }
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor">
+    <Authorized>
+        <div class="outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <h1 class="header no-select">
+                        Add New Kit
+                    </h1>
+                </div>
+                <div class="box-wrapper">
+                    <div class="box2">
+                        <div class="segmentColumn">
+                            <div class="segmentRow">
+                                <label class="label">Please enter New Kit :</label>
+                            </div>
+                            <div class="segmentRow">
+                                <div>
+                                    <input @bind="newKitNumber" class="form-control input" @oninput="CheckInput"
+                                        maxlength="15" autocomplete="off" />
+                                </div>
+                                <div class="segmentcolumn">
+                                    <div class="segmentRow gapBottom">
+                                        <div class="table-set gapLeft">
+                                            <table class="table scrolldown">
+                                                <colgroup>
+                                                    <col style="width: 230px;">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div>Part Number</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (partNumbers.Count == 0)
+                                                    {
+                                                        <tr class="segmentColumn">
+                                                            <td>
+                                                                <div>No data</div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        @foreach (var part in partNumbers)
+                                                        {
+                                                            <tr class="segmentColumn @(selectedPartNumber == part ? "row-active" : "")"
+                                                                @onclick="() => SelectPart(part)">
+                                                                <td>
+                                                                    <div>@part</div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="segmentColumn">
+                                            <button type="button" @onclick="ShowAddPartModal" class="btn btn-sm button-add-part"
+                                                style="@KitButtonColor" disabled="@string.IsNullOrEmpty(newKitNumber)">
+                                                Add Part
+                                            </button>
+                                            <button type="button" @onclick="ShowEditPartModal" class="btn btn-sm button-edit-part"
+                                                style="@PartButtonColor"
+                                                disabled="@string.IsNullOrEmpty(selectedPartNumber)">
+                                                Edit Part
+                                            </button>
+                                            <button type="button" @onclick="() => ShowRemovePartModal()"
+                                                class="btn btn-sm button-rmv-part" style="@PartButtonColor"
+                                                disabled="@string.IsNullOrEmpty(selectedPartNumber)">
+                                                Del Part
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="segmentRow">
+                                        <div class="segmentColumn"
+                                            style="@(partNumbers.Count == 0 ? "faded-button" : "active-button")">
+                                            <button type="button" @onclick="SaveKit" class="btn btn-sm button-save"
+                                                style="@(disableSaveButton ? "background-color: #a5a8a9; border-color: #a5a8a9;" : "background-color: #f36d33; border-color: #f36d33;")"
+                                                disabled="@disableSaveButton">
+                                                Save
+                                            </button>
+                                        </div>
+                                        <div class="segmentColumn">
+                                            <button type="button" @onclick="Cancel" class="btn btn-sm button-cancel2">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (showModal)
+                {
+                    <div class="modal-overlay" style="@(showModal ? "display: flex;" : "display: none;")">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                @if (modalContent == "add")
+                                {
+                                    <div>Add Part Number</div>
+                                }
+                                else if (modalContent == "edit")
+                                {
+                                    <div>Edit Part Number</div>
+                                }
+                            </div> m
+                            @if (modalContent == "add")
+                            {
+                                <AddPart ShowModalChanged="ShowAddModalChanged" OnPartAdded="OnPartAdded" />
+                            }
+                            else if (modalContent == "edit" && data != null)
+                            {
+                                <EditPart ShowModalChanged="ShowEditModalChanged" OnPartEdited="OnPartEdited"
+                                    EditPartData="@data" />
+                            }
+                        </div>
+                    </div>
+                }
+                <PopMsg PopMsgData="@popMsgData" />
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center" />
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

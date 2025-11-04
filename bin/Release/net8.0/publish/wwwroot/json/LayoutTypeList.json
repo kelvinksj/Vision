@@ -1,0 +1,39 @@
+{
+  "LayoutTypeData": [
+    {
+      "ID": 1,
+      "LayoutTypeName": "Standard",
+      "Description": "Single line map",
+      "LayoutType": "Production",
+      "LocationQuantity": 30
+    },
+    {
+      "ID": 2,
+      "LayoutTypeName": "Island",
+      "Description": "Island map",
+      "LayoutType": "Production",
+      "LocationQuantity": 32
+    },
+    {
+      "ID": 3,
+      "LayoutTypeName": "CheckIn",
+      "Description": "Check in map",
+      "LayoutType": "CheckIn",
+      "LocationQuantity": 7
+    },
+    {
+      "ID": 4,
+      "LayoutTypeName": "Gaylord",
+      "Description": "Dumpster area",
+      "LayoutType": "Gaylord",
+      "LocationQuantity": 6
+    },
+    {
+      "ID": 5,
+      "LayoutTypeName": "CPC",
+      "Description": "Check out area",
+      "LayoutType": "CPC",
+      "LocationQuantity": 12
+    }
+  ]
+}

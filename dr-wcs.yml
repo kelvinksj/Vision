@@ -1,0 +1,63 @@
+services:
+  tm:
+    image: taskmanager:beta-241227
+    container_name: tm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.124
+    ports:
+      - 20040:20040
+      - 20080:20080
+
+  cm:
+    image: cm_mattel:v1.5-250123
+    container_name: cm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.125
+    ports:
+      - 20050:20050
+      - 20060:20060
+
+  sm:
+    image: sm_mattel:v1.2-250124
+    container_name: sm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.126
+    ports:
+      - 20070:20070
+
+  ui:
+    image: 0120ui:UI_v1.5.2
+    container_name: ui
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.120
+    ports:
+      - 20000:20000
+
+networks:
+  my_network:
+    name: rcs_bridge
+    external: true

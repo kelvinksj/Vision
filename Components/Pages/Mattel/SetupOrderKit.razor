@@ -1,0 +1,314 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/SetupOrderKit/{ID:int}"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+@inject IServiceProvider ServiceProvider
+
+<style>
+    .button-add,
+    .button-save,
+    .button-clear {
+        background-color: #f36d33;
+        border-color: #f36d33;
+        border-radius: 30px;
+        color: white;
+        width: 120px;
+        height: 40px;
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    .button-add:hover,
+    .button-save:hover,
+    .button-clear:hover {
+        background-color: white;
+        color: black;
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .custom-select {
+            width: 180px;
+            outline: none !important;
+        }
+
+        .custom-select-arrow {
+            position: absolute;
+            left: 150px;
+            top: 6px;
+            pointer-events: none;
+        }
+    }
+
+    .font-transparent {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .font-non-transparent {
+        color: rgba(0, 0, 0, 1);
+    }
+
+    .text-center {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    .box-outer {
+        --outer-height: 60px;
+        --outer-width: 60px;
+        --title-height: 0.6;
+        height: var(--outer-height);
+        width: var(--outer-width);
+        border: 1px solid black;
+        box-sizing: border-box;
+
+        .box-top {
+            height: calc((var(--outer-height) * var(--title-height)) - 1px);
+            width: 100%;
+            background-color: #d3d3d3;
+        }
+
+        .box-text {
+            height: calc((var(--outer-height) * (1 - var(--title-height))) - 1px);
+            width: 100%;
+            background-color: white;
+        }
+    }
+
+    .box-list {
+        height: 540px;
+        width: 150px;
+        border: 1px solid black;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+    }
+
+    .dropdown-list {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 1000;
+        border-radius: 8px;
+        line-height: 0.8em;
+    }
+
+    .dropdown-item {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background-color: #1967d2;
+        color: #ffffff;
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+    }
+
+    .list-wrapper {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid red;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    window.setDragData = function (data) {
+        document.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData("application/json", JSON.stringify(data));
+        });
+    };
+</script>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor">
+    <Authorized>
+        <div class="outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <div class="segmentRow gapBottom">
+                        @if (ID == -1)
+                        {
+                            <h1 id="MyHeader" class="header no-select gapRight">
+                                New Kit Layout
+                            </h1>
+                        }
+                        else if (ID > 0)
+                        {
+                            <h1 id="MyHeader" class="header no-select gapRight">
+                                Edit Kit Layout
+                            </h1>
+                        }
+                        else
+                        {
+                            <h1 id="MyHeader" class="header no-select gapRight">
+                                Setup Kit Layout
+                            </h1>
+                        }
+
+                        <EditForm Model="@orderKit" OnValidSubmit="() => OnValidSubmit(orderKit)" autocomplete="off"
+                            Context="editContext">
+                            <DataAnnotationsValidator />
+                            <div class="segmentRow">
+                                <div class="segmentColumn gapRight">
+                                    <label class="no-select">Kit</label>
+                                    @if (ID == -1)
+                                    {
+                                        <div class="custom-select-wrapper">
+                                            <input type="text" class="form-control custom-select" maxlength="15"
+                                                style="@selectFontColor" @bind-value="orderKit.KitNumber"
+                                                @bind-value:after="() => HandleOnChange1(orderKit.KitNumber)"
+                                                @oninput="(e) => FilterKit(e!.Value!.ToString()!)"
+                                                @onclick="() => ToggleKitDropdown()" />
+                                            <div class="dropdown-list"
+                                                style="@(showKitDropdown ? "display:block;" : "display:none;")">
+                                                @foreach (var item in filteredKitNumbers)
+                                                {
+                                                    <div class="dropdown-item" @onclick="() => SelectKitNumber(item.KitNumber)">
+                                                        @item.KitNumber
+                                                    </div>
+                                                }
+                                            </div>
+                                            <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    }
+                                    else if (ID > 0)
+                                    {
+                                        <input @bind-value="orderKit.KitNumber" maxlength="15" type="text"
+                                            class="form-control custom-select" disabled />
+                                    }
+                                </div>
+                                <div class="segmentColumn gapRight">
+                                    <label class="no-select">Layout</label>
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" class="form-control custom-select" maxlength="15"
+                                            style="@selectFontColor" @bind-value="orderKit.LayoutName"
+                                            @bind-value:after="() => HandleOnChange2(orderKit.LayoutName)"
+                                            @oninput="(e) => FilterLayout(e!.Value!.ToString()!)"
+                                            @onclick="() => ToggleLayoutDropdown()" />
+                                        <div class="dropdown-list"
+                                            style="@(showLayoutDropdown ? "display:block;" : "display:none;")">
+                                            @foreach (var item in filteredLayoutNames)
+                                            {
+                                                <div class="dropdown-item"
+                                                    @onclick="() => SelectLayoutName(item.LayoutName)">
+                                                    @item.LayoutName
+                                                </div>
+                                            }
+                                        </div>
+                                        <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                @if (ID <= 0)
+                                {
+                                    <button type="button" class="btn btn-sm button-add" style="margin-top: 22px;"
+                                        @onclick="() => OnClickAdd()" disabled="@(!IsCreateButtonEnabled)">
+                                        Save
+                                    </button>
+                                    <button type="button" class="btn btn-sm button-clear" style="margin-top: 22px;"
+                                        @onclick="() => OnClickClear()">
+                                        Clear All
+                                    </button>
+                                }
+
+                                @if (ID > 0)
+                                {
+                                    <button type="button" class="btn btn-sm button-save" style="margin-top: 22px;"
+                                        @onclick="() => OnClickSave()" disabled="@(!IsCreateButtonEnabled)">
+                                        Save
+                                    </button>
+                                    <button type="button" class="btn btn-sm button-clear" style="margin-top: 22px;"
+                                        @onclick="() => OnClickClear()">
+                                        Clear All
+                                    </button>
+                                }
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+                <div class="box-wrapper">
+                    <div class="box2">
+                        <div class="segmentRow">
+                            <div class="segmentColumn" style="width: 700px; height: auto;">
+                                @if (layoutData != null)
+                                {
+                                    <RenderFragmentComponent Content="dynamicComponent!" />
+                                }
+                            </div>
+                            <div class="segmentColumn" style="top: -10px;">
+                                <label class="no-select">Part Number:</label>
+                                <div class="box-list">
+                                    <div class="segmentColumn" style="margin: 5px;">
+                                        @if (partNumbers != null)
+                                        {
+                                            foreach (var item in partNumbers.SheetData)
+                                            {
+                                                if (item != partNumbers.SheetData.Last())
+                                                {
+                                                    <div class="list-wrapper" style="margin-bottom: 5px;" draggable="true"
+                                                        @onmousedown="() => HandleOnMouseDown()"
+                                                        @ondragstart="async () => HandleDragStart(item)">
+                                                        <div class="no-select">
+                                                            @item.PartNumber
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="list-wrapper" draggable="true"
+                                                        @onmousedown="() => HandleOnMouseDown()"
+                                                        @ondragstart="async () => HandleDragStart(item)">
+                                                        <div class="no-select">
+                                                            @item.PartNumber
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <PopMsg PopMsgData="@popMsgData" />
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center"></span>
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

@@ -1,0 +1,39 @@
+{
+  "List": [
+    {
+      "ID": 1,
+      "ContainerType": "NA",
+      "Description": "Not available",
+      "BoxColor": "#d3d3d3",
+      "FontColor": "black"
+    },
+    {
+      "ID": 2,
+      "ContainerType": "TBL",
+      "Description": "Table",
+      "BoxColor": "#a2a2a2",
+      "FontColor": "white"
+    },
+    {
+      "ID": 3,
+      "ContainerType": "SKU",
+      "Description": "Material",
+      "BoxColor": "#ffbd62",
+      "FontColor": "black"
+    },
+    {
+      "ID": 4,
+      "ContainerType": "GL",
+      "Description": "Gaylord",
+      "BoxColor": "#874f41",
+      "FontColor": "white"
+    },
+    {
+      "ID": 5,
+      "ContainerType": "FG",
+      "Description": "Finished goods",
+      "BoxColor": "#f36d33",
+      "FontColor": "white"
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/MoveRobot"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject ContainerService ContainerService
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject MattelService MattelService
+@inject PaginationService<Element.AMR> PaginationService
+@inject SortingModel<Element.AMR> SortingModel
+@inject TaskManagerService TaskManagerService
+
+<style>
+    .MoveRobot-style {
+        .input {
+            margin-right: 20px;
+            background-color: rgba(217, 217, 217, 1);
+            border-color: black;
+            border-radius: 0px;
+            width: 230px;
+        }
+
+        .label {
+            font-size: 120x;
+            font-weight: bold;
+            color: rgba(110, 113, 115, 1);
+            margin-top: 10px;
+        }
+
+        .table-set {
+            height: 390px;
+        }
+
+        .setSVG {
+            position: absolute;
+            right: 5px;
+            top: 13px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+<AuthorizeView Roles="Administrator,Engineer">
+    <Authorized>
+        <div class="MoveRobot-style outer">
+            <div class="contain-size">
+                <div class="box1">
+                    <h1 id="MyHeader" class="header no-select">
+                        Robot Maintenance
+                    </h1>
+                </div>
+                <div class="box-wrapper">
+                    <div class="box2">
+                        <div class="segmentRow">
+                            <div class="segmentColumn gapRight">
+                                <div class="segmentColumn gapBottom">
+                                    <label class="label no-select">Please enter a filter :</label>
+                                    <div class="segmentRow">
+                                        <input class="form-control input" bind-Value="@filterText" maxlength="15"
+                                            autocomplete="off" @oninput="(e) => Filter(e!.Value!.ToString()!)" />
+                                        <button type="button" class="btn btn-sm common-btn gapRight"
+                                            disabled="@disableBtn" style="@disableColor"
+                                            @onclick="() => OnClickSuspend()">
+                                            Suspend
+                                        </button>
+                                        <button type="button" class="btn btn-sm common-btn gapRight"
+                                            disabled="@disableBtn" style="@disableColor"
+                                            @onclick="() => OnClickRestore()">
+                                            Restore
+                                        </button>
+                                        <button type="button" class="btn btn-sm common-btn" disabled="@disableBtn"
+                                            style="@disableColor" @onclick="() => OnClickMove()">
+                                            Move
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-set">
+                                    <table class="table scrolldown">
+                                        <colgroup>
+                                            <col style="width: 120px;">
+                                            <col style="width: 180px;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 150px;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            AMR
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Name"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Name"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="segmentRow">
+                                                        <div style="margin-left: 8px;">
+                                                            Serial #
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["SerialNo"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("SerialNo"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="header-wrapper segmentRow">
+                                                        <div style="">
+                                                            Status
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Status"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Status"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="header-wrapper segmentRow">
+                                                        <div style="">
+                                                            Position
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Position.Location"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Position.Location"))" />
+                                                    </div>
+                                                </th>
+                                                <th class="no-select">
+                                                    <div class="header-wrapper segmentRow">
+                                                        <div style="">
+                                                            Battery
+                                                        </div>
+                                                        <div class="@(SortingModel.SortIcons["Battery.Level"]) setSVG"
+                                                            @onclick="@(async () => await SortItems("Battery.Level"))" />
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (PaginationService.GetItems().Any())
+                                            {
+                                                foreach (var item in PaginationService.GetItems())
+                                                {
+                                                    string batLvl = $"{item.Battery.Level.ToString()} %";
+
+                                                    <tr class="@GetRow(item)" @onclick="() => SelectRow(item)">
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.Name
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select">
+                                                                @item.SerialNo
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select" style="text-align: center;">
+                                                                @item.Status
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select" style="text-align: center;">
+                                                                @item.Position.Location
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="no-select" style="text-align: center;">
+                                                                @batLvl
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="5" class="text-center no-select">
+                                                        <div>No data</div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <Pagination T="Element.AMR" PaginationService="PaginationService"
+                                    OnPageChanged="OnPageChanged" />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <MsgList MList="@mList" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (isDisplayMove)
+        {
+            <ViewNode UpdatePosition=ChildUpdatePosition />
+        }
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center"></span>
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

@@ -1,0 +1,20 @@
+services:
+  cm:
+    image: cm_mattel:v1.8-250218
+    container_name: cm
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.125
+    ports:
+      - 20050:20050
+      - 20060:20060
+
+networks:
+  my_network:
+    name: rcs_bridge
+    external: true

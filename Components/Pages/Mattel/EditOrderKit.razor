@@ -1,0 +1,142 @@
+@page "/Mattel/EditOrderKit"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject WorkerService WorkerService
+@inject ScreenWakeLockService ScreenWakeLockService
+@inject CommonLib CommonLib
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+
+<style>
+    .editorderkit-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: auto;
+            width: 500px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            background: white;
+            border: 2px solid black;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .btn-set {
+                background-color: rgba(243, 109, 51, 1);
+                border-color: rgba(243, 109, 51, 1);
+                color: white;
+                border-radius: 30px;
+                font-size: 20px;
+                font-weight: bold;
+                width: 130px;
+                height: 50px;
+            }
+        }
+
+        .icon-wrapper {
+            height: 150px;
+            width: 150px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .box1 {
+            height: auto;
+            width: 100%;
+            text-align: left;
+            border: 0px dotted blue;
+        }
+
+        .box2 {
+            height: auto;
+            width: auto;
+            border: 0px dotted green;
+        }
+
+        .input-style {
+            width: auto;
+            background-color: rgba(217, 217, 217, 1);
+            border-bottom: none;
+        }
+
+        .model-header {
+            width: 100%;
+            background: rgba(110, 113, 115, 1);
+            color: rgba(217, 217, 217, 1);
+            padding: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            height: auto;
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+@if (PopEditData.IsVisible)
+{
+    <div class="editorderkit-overlay">
+        <div class="pop-content">
+            @if (!string.IsNullOrWhiteSpace(PopEditData.Header))
+            {
+                <div class="box1 gapBottom">
+                    <div class="model-header box1">
+                        <div>@PopEditData.Header</div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="gapBottom"></div>
+                <div class="gapBottom"></div>
+            }
+            <div class="box2">
+                <div class="segmentColumn">
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">Current Value</label>
+                        <input @bind="PopEditData.OldValue" class="form-control input-style" maxlength="15" disabled />
+                    </div>
+                    <div class="segmentColumn gapBottom">
+                        <label class="no-select">New Value</label>
+                        <input @bind="PopEditData.NewValue" @oninput="CheckInput" class="form-control input-style"
+                            maxlength="15" autocomplete="off" />
+                    </div>
+                    <div class="gapBottom" />
+                    <div class="segmentRow gapBottom">
+                        <button type="button" @onclick="Confirm" class="btn btn-sm common-btn gapRight" style="@confirmColor"
+                            disabled="@confirmDisable">
+                            Confirm
+                        </button>
+                        <button type="button" @onclick="CloseModal" class="btn btn-sm common-btn">Cancel</button>
+                    </div>
+                    <div class="gapBottom" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

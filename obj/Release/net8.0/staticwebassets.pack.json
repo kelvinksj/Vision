@@ -1,0 +1,141 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\common.css",
+      "PackagePath": "staticwebassets\\common.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\fonts\\Aptos.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Aptos.ttf"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\icons\\Icon.css",
+      "PackagePath": "staticwebassets\\icons\\Icon.css"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\AMR.png",
+      "PackagePath": "staticwebassets\\images\\AMR.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\Country1.png",
+      "PackagePath": "staticwebassets\\images\\Country1.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\Country2.png",
+      "PackagePath": "staticwebassets\\images\\Country2.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\DallasRoboterLogo.png",
+      "PackagePath": "staticwebassets\\images\\DallasRoboterLogo.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\DallasRoboterLogoOnly.png",
+      "PackagePath": "staticwebassets\\images\\DallasRoboterLogoOnly.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\images\\Location.png",
+      "PackagePath": "staticwebassets\\images\\Location.png"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\js\\Global.js",
+      "PackagePath": "staticwebassets\\js\\Global.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\js\\Keyboard.js",
+      "PackagePath": "staticwebassets\\js\\Keyboard.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\js\\ScreenWakeLock.js",
+      "PackagePath": "staticwebassets\\js\\ScreenWakeLock.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\js\\Worker.js",
+      "PackagePath": "staticwebassets\\js\\Worker.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\js\\WorkerManager.js",
+      "PackagePath": "staticwebassets\\js\\WorkerManager.js"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\CPCSettings.json",
+      "PackagePath": "staticwebassets\\json\\CPCSettings.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\ContainerTypeList.json",
+      "PackagePath": "staticwebassets\\json\\ContainerTypeList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\LayoutAreaList.json",
+      "PackagePath": "staticwebassets\\json\\LayoutAreaList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\LayoutList.json",
+      "PackagePath": "staticwebassets\\json\\LayoutList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\LayoutTypeList.json",
+      "PackagePath": "staticwebassets\\json\\LayoutTypeList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\OrderKitList.json",
+      "PackagePath": "staticwebassets\\json\\OrderKitList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\PageList.json",
+      "PackagePath": "staticwebassets\\json\\PageList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\ProductionList.json",
+      "PackagePath": "staticwebassets\\json\\ProductionList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\ScanSheetList.json",
+      "PackagePath": "staticwebassets\\json\\ScanSheetList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\Settings.json",
+      "PackagePath": "staticwebassets\\json\\Settings.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\SheetList.json",
+      "PackagePath": "staticwebassets\\json\\SheetList.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\json\\UserAccount.json",
+      "PackagePath": "staticwebassets\\json\\UserAccount.json"
+    },
+    {
+      "Id": "C:\\Users\\drkel\\OneDrive\\Documents\\GitHub\\TaskManagerWeb\\wwwroot\\sound\\file_example_WAV_1MG.wav",
+      "PackagePath": "staticwebassets\\sound\\file_example_WAV_1MG.wav"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.TaskManagerWeb.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.TaskManagerWeb.props",
+      "PackagePath": "build\\TaskManagerWeb.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.TaskManagerWeb.props",
+      "PackagePath": "buildMultiTargeting\\TaskManagerWeb.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.TaskManagerWeb.props",
+      "PackagePath": "buildTransitive\\TaskManagerWeb.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

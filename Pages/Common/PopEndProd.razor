@@ -1,0 +1,423 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Common/PopEndProd/{PopEndProdData}"
+@rendermode InteractiveServer
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+
+<style>
+    .popendprod-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: 400px;
+            width: 500px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px solid black;
+        }
+
+        .label-set {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .btn-set {
+                background-color: rgba(243, 109, 51, 1);
+                border-color: rgba(243, 109, 51, 1);
+                color: white;
+                border-radius: 30px;
+                font-size: 20px;
+                font-weight: bold;
+                width: 130px;
+                height: 50px;
+            }
+        }
+
+        .icon-wrapper {
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .text-center {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .box-outer {
+            --outer-height: 150px;
+            --outer-width: 150px;
+            --title-header: 0.2;
+            --title-height: 0.6;
+            height: var(--outer-height);
+            width: var(--outer-width);
+            border: 1px solid black;
+            box-sizing: border-box;
+
+            .box-header {
+                height: calc((var(--outer-height) * var(--title-header)));
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-top {
+                height: calc((var(--outer-height) * var(--title-height)) - 1px);
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-text {
+                height: calc((var(--outer-height) * (1 - var(--title-header) - var(--title-height))) - 1px);
+                width: 100%;
+                background-color: white;
+            }
+        }
+
+        .box-outer2 {
+            --outer-height: 150px;
+            --title-header: 0.0;
+            --title-height: 0.8;
+            height: var(--outer-height);
+            width: 150px;
+            border: 1px solid black;
+            box-sizing: border-box;
+
+            .box-header {
+                height: calc((var(--outer-height) * var(--title-header)));
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-top {
+                height: calc((var(--outer-height) * var(--title-height)) - 1px);
+                width: 100%;
+                background-color: #d3d3d3;
+            }
+
+            .box-text {
+                height: calc((var(--outer-height) * (1 - var(--title-header) - var(--title-height))) - 1px);
+                width: 100%;
+                background-color: white;
+            }
+        }
+
+        .switch {
+            --switch-width: 55px;
+            --switch-height: calc(34px - (60px - var(--switch-width)));
+            --switch-extra-length: calc(var(--switch-width) - 50px);
+            --switch-btn-width: calc(var(--switch-width) - 34px);
+            --switch-btn-height: calc(var(--switch-height) - 8px);
+            --switch-transform: calc(26px + var(--switch-extra-length));
+            --switch-slider-width: calc(var(--switch-width) + var(--switch-extra-length));
+            position: relative;
+            display: inline-block;
+            width: var(--switch-width);
+            height: var(--switch-height);
+
+            input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            input:checked+.slider2,
+            input:checked+.slider {
+                background-color: #39b54a;
+            }
+
+            input:focus+.slider2,
+            input:focus+.slider {
+                box-shadow: 0 0 1px #39b54a;
+            }
+
+            input:checked+.slider2:before,
+            input:checked+.slider:before {
+                -webkit-transform: translateX(var(--switch-transform));
+                -ms-transform: translateX(var(--switch-transform));
+                transform: translateX(var(--switch-transform));
+            }
+
+            .slider {
+                width: var(--switch-slider-width);
+                height: var(--switch-height);
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #6e7173;
+                -webkit-transition: .4s;
+                transition: .4s;
+
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: var(--switch-btn-height);
+                    width: var(--switch-btn-width);
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: white;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+
+                &.round {
+                    border-radius: 34px;
+
+                    &:before {
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            .slider2 {
+                width: var(--switch-slider-width);
+                height: var(--switch-height);
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ded700;
+                -webkit-transition: .4s;
+                transition: .4s;
+
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: var(--switch-btn-height);
+                    width: var(--switch-btn-width);
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: white;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+
+                &.round {
+                    border-radius: 34px;
+
+                    &:before {
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+
+        .style-question {
+            width: 110px;
+            margin-top: 2px;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        .style-answer {
+            width: 90px;
+        }
+
+        .item-center {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+    }
+</style>
+
+@if (PopEndProdData.ActivatePopup)
+{
+    <div class="popendprod-overlay" style="@(true ? "display: flex;" : "display: none;")">
+        <div class="pop-content">
+            @{
+                if (PopEndProdData.IconClick != null)
+                {
+                    <div style="position: absolute; top: 5px; right: 5px;">
+                        <div class="icon_cancel_orange icon-wrapper" @onclick="() => PopEndProdData.IconClick()" />
+                    </div>
+                }
+
+                if (PopEndProdData.Text_1 != null
+                && PopEndProdData.Text_1 != string.Empty)
+                {
+                    <label class="label-set no-select">@PopEndProdData.Text_1</label>
+                }
+
+                if (PopEndProdData.Text_2 != null
+                && PopEndProdData.Text_2 != string.Empty)
+                {
+                    <label class="label-set no-select">@PopEndProdData.Text_2</label>
+                }
+
+                <div class="segmentRow gapTop gapBottom">
+                    <label class="style-question no-select">Clear all SKU ?</label>
+                    <div class="segmentColumn item-center style-answer">
+                        <label class="switch" style="margin-bottom: 5px;">
+                            <input type="checkbox" checked="@PopEndProdData.Answer_1"
+                                @onchange="@((args) => OnChangeAnswer1(args))">
+                            <span class="slider2 round"></span>
+                        </label>
+                        @if (PopEndProdData.Answer_1)
+                        {
+                            <label class="no-select" style="margin: 0px;">Yes</label>
+                        }
+                        else
+                        {
+                            <label class="no-select" style="margin: 0px;">Quarantine</label>
+                        }
+                    </div>
+                </div>
+
+                <div class="segmentRow gapBottom">
+                    <label class="style-question no-select">Clear all GL ?</label>
+                    <div class="segmentColumn item-center style-answer">
+                        <label class="switch" style="margin-bottom: 5px;">
+                            <input type="checkbox" checked="@PopEndProdData.Answer_2"
+                                @onchange="@((args) => OnChangeAnswer2(args))">
+                            <span class="slider round"></span>
+                        </label>
+                        @if (PopEndProdData.Answer_2)
+                        {
+                            <label class="no-select" style="margin: 0px;">Yes</label>
+                        }
+                        else
+                        {
+                            <label class="no-select" style="margin: 0px;">No</label>
+                        }
+                    </div>
+                </div>
+
+                <div class="segmentRow gapBottom">
+                    <label class="style-question no-select">Clear all FG ?</label>
+                    <div class="segmentColumn item-center style-answer">
+                        <label class="switch" style="margin-bottom: 5px;">
+                            <input type="checkbox" checked="@PopEndProdData.Answer_3"
+                                @onchange="@((args) => OnChangeAnswer3(args))">
+                            <span class="slider round"></span>
+                        </label>
+                        @if (PopEndProdData.Answer_3)
+                        {
+                            <label class="no-select" style="margin: 0px;">Yes</label>
+                        }
+                        else
+                        {
+                            <label class="no-select" style="margin: 0px;">No</label>
+                        }
+                    </div>
+                </div>
+
+
+                if ((PopEndProdData.BtnText_1 != null
+                && PopEndProdData.BtnText_1 != string.Empty
+                && PopEndProdData.BtnClick_1 != null)
+                || (PopEndProdData.BtnText_2 != null
+                && PopEndProdData.BtnText_2 != string.Empty
+                && PopEndProdData.BtnClick_2 != null))
+                {
+                    <div class="btn-wrapper" style="margin-bottom: 10px;">
+                        @{
+                            if (PopEndProdData.BtnText_1 != null
+                            && PopEndProdData.BtnText_1 != string.Empty
+                            && PopEndProdData.BtnClick_1 != null)
+                            {
+                                if (PopEndProdData.BtnText_2 != null
+                                && PopEndProdData.BtnText_2 != string.Empty
+                                && PopEndProdData.BtnClick_2 != null)
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set gapRight" @onclick="() => PopEndProdData.BtnClick_1()">
+                                        @PopEndProdData.BtnText_1
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopEndProdData.BtnClick_1()">
+                                        @PopEndProdData.BtnText_1
+                                    </button>
+                                }
+                            }
+
+                            if (PopEndProdData.BtnText_2 != null
+                            && PopEndProdData.BtnText_2 != string.Empty
+                            && PopEndProdData.BtnClick_2 != null)
+                            {
+                                <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopEndProdData.BtnClick_2()">
+                                    @PopEndProdData.BtnText_2
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+
+                if ((PopEndProdData.BtnText_3 != null
+                && PopEndProdData.BtnText_3 != string.Empty
+                && PopEndProdData.BtnClick_3 != null)
+                || (PopEndProdData.BtnText_4 != null
+                && PopEndProdData.BtnText_4 != string.Empty
+                && PopEndProdData.BtnClick_4 != null))
+                {
+                    <div class="btn-wrapper">
+                        @{
+                            if (PopEndProdData.BtnText_3 != null
+                            && PopEndProdData.BtnText_3 != string.Empty
+                            && PopEndProdData.BtnClick_3 != null)
+                            {
+                                if (PopEndProdData.BtnText_4 != null
+                                && PopEndProdData.BtnText_4 != string.Empty
+                                && PopEndProdData.BtnClick_4 != null)
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set gapRight" @onclick="() => PopEndProdData.BtnClick_3()">
+                                        @PopEndProdData.BtnText_3
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopEndProdData.BtnClick_3()">
+                                        @PopEndProdData.BtnText_3
+                                    </button>
+                                }
+                            }
+
+                            if (PopEndProdData.BtnText_4 != null
+                            && PopEndProdData.BtnText_4 != string.Empty
+                            && PopEndProdData.BtnClick_4 != null)
+                            {
+                                <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopEndProdData.BtnClick_4()">
+                                    @PopEndProdData.BtnText_4
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

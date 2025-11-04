@@ -1,0 +1,128 @@
+@page "/Common/PopMsg/{PopMsgData}"
+@rendermode InteractiveServer
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+
+<style>
+    .popmsg-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: 400px;
+            width: 500px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px solid black;
+        }
+
+        .label-set {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            .btn-set {
+                background-color: rgba(243, 109, 51, 1);
+                border-color: rgba(243, 109, 51, 1);
+                color: white;
+                border-radius: 30px;
+                font-size: 20px;
+                font-weight: bold;
+                width: 130px;
+                height: 50px;
+            }
+        }
+
+        .icon-wrapper {
+            height: 150px;
+            width: 150px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+</style>
+
+@if (PopMsgData.ActivatePopup)
+{
+    <div class="popmsg-overlay" style="@(true ? "display: flex;" : "display: none;")">
+        <div class="pop-content">
+            @{
+                if (!String.IsNullOrWhiteSpace(PopMsgData.Text_1))
+                {
+                    <label class="label-set">@PopMsgData.Text_1</label>
+                }
+
+                if (!String.IsNullOrWhiteSpace(PopMsgData.Text_2))
+                {
+                    <label class="label-set">@PopMsgData.Text_2</label>
+                }
+
+                if (!String.IsNullOrWhiteSpace(PopMsgData.Text_3))
+                {
+                    <label class="label-set">@PopMsgData.Text_3`</label>
+                }
+
+                if (!String.IsNullOrWhiteSpace(PopMsgData.Middle_Icon))
+                {
+                    <div class="@PopMsgData.Middle_Icon icon-wrapper" />
+                }
+
+                if ((!String.IsNullOrWhiteSpace(PopMsgData.BtnText_1) && PopMsgData.BtnClick_1 != null)
+                || (!String.IsNullOrWhiteSpace(PopMsgData.BtnText_2) && PopMsgData.BtnClick_2 != null))
+                {
+                    <div class="btn-wrapper">
+                        @{
+                            if (!String.IsNullOrWhiteSpace(PopMsgData.BtnText_1)
+                            && PopMsgData.BtnClick_1 != null)
+                            {
+                                if (!String.IsNullOrWhiteSpace(PopMsgData.BtnText_2)
+                                && PopMsgData.BtnClick_2 != null)
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set gapRight" @onclick="() => PopMsgData.BtnClick_1()">
+                                        @PopMsgData.BtnText_1
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopMsgData.BtnClick_1()">
+                                        @PopMsgData.BtnText_1
+                                    </button>
+                                }
+                            }
+
+                            if (!String.IsNullOrWhiteSpace(PopMsgData.BtnText_2)
+                            && PopMsgData.BtnClick_2 != null)
+                            {
+                                <button type="button" class="PopMsgBtn btn btn-set" @onclick="() => PopMsgData.BtnClick_2()">
+                                    @PopMsgData.BtnText_2
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

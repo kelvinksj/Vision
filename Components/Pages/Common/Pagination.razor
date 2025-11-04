@@ -1,0 +1,112 @@
+@typeparam T
+
+<style>
+    .pagination-style {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .page-nav {
+        cursor: pointer;
+        margin: 0;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 10px 15px;
+        background-color: #f8f9fa;
+        /* Light background color */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .page-nav:hover {
+        background-color: #e9ecef;
+        /* Slightly darker on hover */
+    }
+
+    .page-nav.disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
+</style>
+
+<div class="pagination-style">
+    @{
+        if (PaginationService != null)
+        {
+            if (PaginationService.CurrentPage > 1)
+            {
+                <label @onclick="PreviousPage" class="page-nav no-select">&lt;</label>
+            }
+
+            int totalPages = PaginationService.GetTotalPages();
+            int startPage, endPage;
+
+            if (PaginationService.CurrentPage == 1)
+            {
+                startPage = 1;
+                endPage = Math.Min(3, totalPages);
+            }
+            else if (PaginationService.CurrentPage == totalPages)
+            {
+                startPage = Math.Max(totalPages - 2, 1);
+                endPage = totalPages;
+            }
+            else //example if current page is 3
+            {
+                startPage = PaginationService.CurrentPage - 1; // 3-1=2
+                endPage = PaginationService.CurrentPage + 1; // 3+1=4 so it will display <234>
+            }
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+                var h = i;
+                <label @onclick="() => PageClick(h)" class="page-nav no-select"
+                    style="font-weight:@(PaginationService.CurrentPage == h ? "bold" : "normal")">@h</label>
+            }
+
+            if (PaginationService.CurrentPage < totalPages)
+            {
+                <label @onclick="NextPage" class="page-nav no-select">&gt;</label>
+            }
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public PaginationService<T>? PaginationService { get; set; }
+
+    [Parameter]
+    public EventCallback OnPageChanged { get; set; }
+
+    private async void PreviousPage()
+    {
+        PaginationService?.GoToPage(PaginationService.CurrentPage - 1);
+
+        if (OnPageChanged.HasDelegate)
+            await OnPageChanged.InvokeAsync(null);
+    }
+
+    private async void NextPage()
+    {
+        PaginationService?.GoToPage(PaginationService.CurrentPage + 1);
+
+        if (OnPageChanged.HasDelegate)
+            await OnPageChanged.InvokeAsync(null);
+    }
+
+    private async void PageClick(int page)
+    {
+        if (PaginationService?.CurrentPage != page)
+        {
+            PaginationService?.GoToPage(page);
+
+            if (OnPageChanged.HasDelegate)
+                await OnPageChanged.InvokeAsync(null);
+        }
+    }
+}

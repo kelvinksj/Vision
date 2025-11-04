@@ -1,0 +1,244 @@
+{
+  "LocationSettings": [
+    {
+      "LocationID": "23000001",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000002",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000004",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000005",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000006",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000007",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000008",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000009",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000010",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000012",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000013",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23000014",
+      "Parameter": ""
+    },
+    {
+      "LocationID": "23010001",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010002",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010003",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010004",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23010005",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010006",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010007",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23010008",
+      "Parameter": "L6"
+    },
+    {
+      "LocationID": "23020001",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020002",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020003",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020004",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020005",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020006",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020007",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23020008",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23030001",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030002",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030003",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030004",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030005",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030006",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030007",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23030008",
+      "Parameter": "L3"
+    },
+    {
+      "LocationID": "23040001",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040002",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040003",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040004",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040005",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040006",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040007",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23040008",
+      "Parameter": "L1"
+    },
+    {
+      "LocationID": "23050001",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050002",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050003",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050004",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050005",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050006",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050007",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23050008",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060001",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060002",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060003",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060004",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060005",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060006",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060007",
+      "Parameter": "L5"
+    },
+    {
+      "LocationID": "23060008",
+      "Parameter": "L5"
+    }
+  ]
+}

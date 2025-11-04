@@ -1,0 +1,339 @@
+/* _content/TaskManagerWeb/Components/Layout/MainLayout.razor.rz.scp.css */
+.no-select[b-4mwoxvmf3f] {
+    /* Safari */
+    -webkit-user-select: none;
+    /* Firefox */
+    -moz-user-select: none;
+    /* Internet Explorer/Edge */
+    -ms-user-select: none;
+    /* Standard syntax */
+    user-select: none;
+    /* Disable all interactions */
+    pointer-events: none;
+}
+
+.page[b-4mwoxvmf3f] {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+}
+
+main[b-4mwoxvmf3f] {
+    flex: auto;
+}
+
+.sidebar[b-4mwoxvmf3f] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-4mwoxvmf3f] {
+    display: flex;
+    position: relative;
+    top: 0;
+    height: 3.5rem;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    align-items: center;
+    justify-content: left;
+    z-index: 2000;
+}
+
+.top-row[b-4mwoxvmf3f]  a,
+.top-row[b-4mwoxvmf3f]  .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
+
+.top-row[b-4mwoxvmf3f]  a:hover,
+.top-row[b-4mwoxvmf3f]  .btn-link:hover {
+    text-decoration: underline;
+}
+
+.top-row[b-4mwoxvmf3f]  a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#blazor-error-ui[b-4mwoxvmf3f] {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss[b-4mwoxvmf3f] {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.logo[b-4mwoxvmf3f] {
+    width: 100px;
+    height: 50px;
+}
+
+.top-row .logout[b-4mwoxvmf3f],
+.top-row .login[b-4mwoxvmf3f],
+.top-row .about[b-4mwoxvmf3f] {
+    color: #006bb7;
+    text-decoration: underline;
+}
+
+.top-row .about[b-4mwoxvmf3f] {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+}
+
+.top-row .login[b-4mwoxvmf3f] {
+    position: absolute;
+    bottom: 4px;
+    right: 10px;
+}
+
+.top-row .logout[b-4mwoxvmf3f] {
+    position: absolute;
+    top: 4px;
+    right: 90px;
+}
+
+.top-row .greetUser[b-4mwoxvmf3f] {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    font-size: 20px;
+    color: black;
+}
+
+.body[b-4mwoxvmf3f] {
+    position: relative;
+    height: calc(100vh - 3.5rem);
+    background-color: #e0e0e0;
+}
+
+article[b-4mwoxvmf3f] {
+    padding: none;
+}
+
+/* Styles for Samsung Galaxy Note10+ */
+/*@media only screen and (min-width: 412px) and (max-width: 869px) {
+
+    .scale2 {
+        transform: scale(45%);
+        transform-origin: top left;
+    }
+}*/
+
+/* Styles for Samsung Galaxy Note10+ */
+/*@media only screen and (min-width: 412px) and (max-width: 869px) and (orientation: landscape) {
+
+    .scale2 {
+        transform: scale(35%);
+        transform-origin: top left;
+    }
+}*/
+
+/* Desktop */
+/*@media (min-width: 1024.01px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 2rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(80%);
+        transform-origin: top left;
+    }
+}*/
+
+/* iPad */
+/*@media screen and (min-device-width: 768px) and (max-device-width: 819px) and (orientation: portrait) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 4rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(70%);
+        transform-origin: top left;
+    }
+}*/
+
+/* iPad */
+/*@media screen and (min-device-width: 768px) and (max-device-width: 819px) and (orientation: landscape) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 4rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(75%);
+        transform-origin: top left;
+    }
+}*/
+/* _content/TaskManagerWeb/Components/Layout/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-ogcehcw2o6] {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0rem;
+    right: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler:checked[b-ogcehcw2o6]~ {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.top-row[b-ogcehcw2o6] {
+    height: 3.5rem;
+    background-color: #141111;
+    top: -0.01px;
+    z-index: 1000;
+}
+
+.navbar-brand[b-ogcehcw2o6] {
+    font-size: 1.5rem;
+}
+
+.bi[b-ogcehcw2o6] {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    background-size: cover;
+    font-family: Cambria;
+}
+
+.bi-house-door-fill-nav-menu[b-ogcehcw2o6] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-house-door-fill' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
+}
+
+.bi-plus-square-fill-nav-menu[b-ogcehcw2o6] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-plus-square-fill' viewBox='0 0 16 16'%3E%3Cpath d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z'/%3E%3C/svg%3E");
+}
+
+.bi-list-nested-nav-menu[b-ogcehcw2o6] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-list-nested' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
+}
+
+.nav-item[b-ogcehcw2o6] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+.nav-item:first-of-type[b-ogcehcw2o6] {
+    padding-top: 1rem;
+}
+
+.nav-item:last-of-type[b-ogcehcw2o6] {
+    padding-bottom: 1rem;
+}
+
+.nav-item[b-ogcehcw2o6]  .nav-link {
+    color: #d7d7d7;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+    width: 100%;
+}
+
+.nav-item[b-ogcehcw2o6]  a.active {
+    background-color: rgba(255, 255, 255, 0.37);
+    color: white;
+}
+
+.nav-item[b-ogcehcw2o6]  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-scrollable[b-ogcehcw2o6] {
+    display: block;
+    max-height: 684px;
+    overflow-y: auto;
+}
+
+.navbar-toggler:checked~.nav-scrollable[b-ogcehcw2o6] {
+    display: block;
+}
+
+.add-backgound-color1[b-ogcehcw2o6] {
+    background-color: #141414;
+    /*border: 2px solid orangered;*/
+    /*border-radius: 15px;*/
+}
+
+.add-backgound-color2[b-ogcehcw2o6] {
+    background-color: #141414;
+}

@@ -1,0 +1,112 @@
+{
+  "LayoutArea": [
+    {
+      "ID": 1,
+      "LayoutName": "Line1",
+      "Description": "Line #1",
+      "LineCode": "L1",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2206,
+      "AreaCodeEnd": 2206
+    },
+    {
+      "ID": 2,
+      "LayoutName": "Line2",
+      "Description": "Line #2",
+      "LineCode": "L2",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2205,
+      "AreaCodeEnd": 2205
+    },
+    {
+      "ID": 3,
+      "LayoutName": "Line3",
+      "Description": "Line #3",
+      "LineCode": "L3",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2204,
+      "AreaCodeEnd": 2204
+    },
+    {
+      "ID": 4,
+      "LayoutName": "Line4",
+      "Description": "Line #4",
+      "LineCode": "L4",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2203,
+      "AreaCodeEnd": 2203
+    },
+    {
+      "ID": 5,
+      "LayoutName": "Line5",
+      "Description": "Line #5",
+      "LineCode": "L5",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2202,
+      "AreaCodeEnd": 2202
+    },
+    {
+      "ID": 6,
+      "LayoutName": "Line6",
+      "Description": "Line #6",
+      "LineCode": "L6",
+      "LayoutType": "Production",
+      "AreaCodeStart": 2201,
+      "AreaCodeEnd": 2201
+    },
+    {
+      "ID": 7,
+      "LayoutName": "CheckIn",
+      "Description": "Check In",
+      "LineCode": "CI",
+      "LayoutType": "CheckIn",
+      "AreaCodeStart": 2001,
+      "AreaCodeEnd": 2100
+    },
+    {
+      "ID": 8,
+      "LayoutName": "Gaylord",
+      "Description": "Gaylord",
+      "LineCode": "GL",
+      "LayoutType": "Gaylord",
+      "AreaCodeStart": 2401,
+      "AreaCodeEnd": 2500
+    },
+    {
+      "ID": 9,
+      "LayoutName": "CPC",
+      "Description": "CPC Area",
+      "LineCode": "CPC",
+      "LayoutType": "CPC",
+      "AreaCodeStart": 2300,
+      "AreaCodeEnd": 2400
+    },
+    {
+      "ID": 10,
+      "LayoutName": "VAS",
+      "Description": "Staging",
+      "LineCode": "VAS",
+      "LayoutType": "VAS",
+      "AreaCodeStart": 2101,
+      "AreaCodeEnd": 2200
+    },
+    {
+      "ID": 11,
+      "LayoutName": "AMR",
+      "Description": "AMR maintenance",
+      "LineCode": "AMR",
+      "LayoutType": "AMR",
+      "AreaCodeStart": 9999,
+      "AreaCodeEnd": 9999
+    },
+    {
+      "ID": 12,
+      "LayoutName": "Table",
+      "Description": "Table maintenance",
+      "LineCode": "Table",
+      "LayoutType": "Table",
+      "AreaCodeStart": 9999,
+      "AreaCodeEnd": 9999
+    }
+  ]
+}

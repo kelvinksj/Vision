@@ -1,0 +1,223 @@
+@page "/Account/TableEdit"
+@rendermode InteractiveServer
+@implements IDisposable
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject MattelService MattelService
+
+<style>
+    .table-edit-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: auto;
+            width: 500px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            background: white;
+            border: 2px solid black;
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .box1 {
+            height: auto;
+            width: 100%;
+            text-align: left;
+            border: 0px dotted blue;
+        }
+
+        .box2 {
+            height: auto;
+            width: auto;
+            border: 0px dotted green;
+        }
+
+        .input-style {
+            width: auto;
+        }
+
+        .model-header {
+            width: 100%;
+            background: rgba(110, 113, 115, 1);
+            color: rgba(217, 217, 217, 1);
+            padding: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            height: auto;
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+
+            .custom-select {
+                width: 190px;
+            }
+
+            .icon-box {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                pointer-events: none;
+            }
+
+            .custom-select-arrow {
+                position: absolute;
+                right: 0px;
+                top: 0px;
+                pointer-events: none;
+            }
+
+            .setSVG {
+                position: relative;
+                right: 0px;
+                top: 0px;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+</style>
+
+<PageTitle>@CommonParameters.AppName</PageTitle>
+
+@if (popTableEditData.IsVisible)
+{
+    <AuthorizeView Roles="Administrator,Engineer">
+        <Authorized>
+            <div class="table-edit-overlay">
+                <div class="pop-content">
+                    @if (!string.IsNullOrWhiteSpace(popTableEditData.Header))
+                    {
+                        <div class="box1 gapBottom">
+                            <div class="model-header box1">
+                                <div>@popTableEditData.Header</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="gapBottom" />
+                        <div class="gapBottom" />
+                    }
+                    <div class="box2">
+                        <EditForm Model="@popTableEditData.Table" OnValidSubmit="() => OnValidSubmit()" autocomplete="off"
+                            Context="editContext">
+                            <DataAnnotationsValidator />
+                            <div class="segmentRow">
+                                <div class="segmentColumn">
+                                    <label class="no-select">Table Code</label>
+                                    <InputText class="form-control input-style" maxlength="15" autocomplete="off"
+                                        disabled="true" @bind-Value="popTableEditData.Table.TableCode" />
+                                </div>
+                                <div class="segmentColumn gapLeft">
+                                    <label class="no-select">Location</label>
+                                    <InputText class="form-control input-style" maxlength="15" autocomplete="off"
+                                        disabled="true" @bind-Value="popTableEditData.Table.Location" />
+                                </div>
+                            </div>
+                            <div class="segmentRow gapTop">
+                                <div class="segmentColumn">
+                                    <label class="no-select">Type</label>
+                                    <div class="custom-select-wrapper">
+                                        <InputSelect class="form-control custom-select"
+                                            @bind-Value="popTableEditData.Table.Type" @bind-Value:after="HandleTypeChange">
+                                            @foreach (var item in tableType)
+                                            {
+                                                <option value="@item">
+                                                    @item
+                                                </option>
+                                            }
+                                        </InputSelect>
+                                        <div class="icon-box">
+                                            <div class="icon_selection_down setSVG" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="segmentColumn gapLeft">
+                                    <label class="no-select">Status</label>
+                                    <div class="custom-select-wrapper">
+                                        <InputSelect class="form-control custom-select" disabled="@disableStatus"
+                                            @bind-Value="popTableEditData.Table.Status">
+                                            @foreach (var item in tableState)
+                                            {
+                                                <option value="@item">
+                                                    @item
+                                                </option>
+                                            }
+                                        </InputSelect>
+                                        <div class="icon-box">
+                                            <div class="icon_selection_down setSVG" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="segmentRow gapTop">
+                                <div class="segmentColumn">
+                                    <label class="no-select">Kit Number</label>
+                                    <InputText class="form-control input-style" maxlength="15" autocomplete="off"
+                                        disabled="@disableKit" @bind-Value="popTableEditData.Table.KitNumber"
+                                        @oninput="HandleKitChange" />
+                                </div>
+                                <div class="segmentColumn gapLeft">
+                                    <label class="no-select">Part Number</label>
+                                    <InputText class="form-control input-style" maxlength="15" autocomplete="off"
+                                        disabled="@disablePart" @bind-Value="popTableEditData.Table.PartNumber"
+                                        @oninput="HandlePartChange" />
+                                </div>
+                            </div>
+                            <div class="segmentRow gapTop">
+                                <div class="btn-wrapper">
+                                    <button type="button" @onclick="Confirm" class="btn btn-sm common-btn"
+                                        style="@disableStyleConfirm" disabled="@disableConfirm">
+                                        Confirm
+                                    </button>
+                                    <button type="button" @onclick="Cancel" class="btn btn-sm common-btn gapLeft">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="gapBottom" />
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <span class="spinner-border spinner-border-lg align-center"></span>
+            <span> Checking authorization in progress ...........</span>
+        </NotAuthorized>
+    </AuthorizeView>
+}

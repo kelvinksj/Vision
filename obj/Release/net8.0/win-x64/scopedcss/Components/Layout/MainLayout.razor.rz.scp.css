@@ -1,0 +1,233 @@
+.no-select[b-4mwoxvmf3f] {
+    /* Safari */
+    -webkit-user-select: none;
+    /* Firefox */
+    -moz-user-select: none;
+    /* Internet Explorer/Edge */
+    -ms-user-select: none;
+    /* Standard syntax */
+    user-select: none;
+    /* Disable all interactions */
+    pointer-events: none;
+}
+
+.page[b-4mwoxvmf3f] {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+}
+
+main[b-4mwoxvmf3f] {
+    flex: auto;
+}
+
+.sidebar[b-4mwoxvmf3f] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-4mwoxvmf3f] {
+    display: flex;
+    position: relative;
+    top: 0;
+    height: 3.5rem;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    align-items: center;
+    justify-content: left;
+    z-index: 2000;
+}
+
+.top-row[b-4mwoxvmf3f]  a,
+.top-row[b-4mwoxvmf3f]  .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
+
+.top-row[b-4mwoxvmf3f]  a:hover,
+.top-row[b-4mwoxvmf3f]  .btn-link:hover {
+    text-decoration: underline;
+}
+
+.top-row[b-4mwoxvmf3f]  a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#blazor-error-ui[b-4mwoxvmf3f] {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss[b-4mwoxvmf3f] {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.logo[b-4mwoxvmf3f] {
+    width: 100px;
+    height: 50px;
+}
+
+.top-row .logout[b-4mwoxvmf3f],
+.top-row .login[b-4mwoxvmf3f],
+.top-row .about[b-4mwoxvmf3f] {
+    color: #006bb7;
+    text-decoration: underline;
+}
+
+.top-row .about[b-4mwoxvmf3f] {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+}
+
+.top-row .login[b-4mwoxvmf3f] {
+    position: absolute;
+    bottom: 4px;
+    right: 10px;
+}
+
+.top-row .logout[b-4mwoxvmf3f] {
+    position: absolute;
+    top: 4px;
+    right: 90px;
+}
+
+.top-row .greetUser[b-4mwoxvmf3f] {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    font-size: 20px;
+    color: black;
+}
+
+.body[b-4mwoxvmf3f] {
+    position: relative;
+    height: calc(100vh - 3.5rem);
+    background-color: #e0e0e0;
+}
+
+article[b-4mwoxvmf3f] {
+    padding: none;
+}
+
+/* Styles for Samsung Galaxy Note10+ */
+/*@media only screen and (min-width: 412px) and (max-width: 869px) {
+
+    .scale2 {
+        transform: scale(45%);
+        transform-origin: top left;
+    }
+}*/
+
+/* Styles for Samsung Galaxy Note10+ */
+/*@media only screen and (min-width: 412px) and (max-width: 869px) and (orientation: landscape) {
+
+    .scale2 {
+        transform: scale(35%);
+        transform-origin: top left;
+    }
+}*/
+
+/* Desktop */
+/*@media (min-width: 1024.01px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 2rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(80%);
+        transform-origin: top left;
+    }
+}*/
+
+/* iPad */
+/*@media screen and (min-device-width: 768px) and (max-device-width: 819px) and (orientation: portrait) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 4rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(70%);
+        transform-origin: top left;
+    }
+}*/
+
+/* iPad */
+/*@media screen and (min-device-width: 768px) and (max-device-width: 819px) and (orientation: landscape) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row.auth ::deep a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row,
+    article {
+        padding-left: 4rem;
+        padding-right: 1.5rem;
+    }
+
+    .scale2 {
+        transform: scale(75%);
+        transform-origin: top left;
+    }
+}*/

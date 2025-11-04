@@ -1,0 +1,19 @@
+services:
+  ui:
+    image: 0120ui:UI_v1.6.11
+    container_name: ui
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      my_network:
+        ipv4_address: 70.70.70.120
+    ports:
+      - 20000:20000
+
+networks:
+  my_network:
+    name: rcs_bridge
+    external: true

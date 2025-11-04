@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="icons/Icon.css" />
+    <link rel="icon" type="image/png" href="images/DallasRoboterLogoOnly.png" />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
+</head>
+
+<body>
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
+    <script src="_framework/blazor.web.js"></script>
+    <script type="module" src="js/Global.js"></script>
+    <script type="module" src="js/Keyboard.js"></script>
+    <script type="module" src="js/ScreenWakeLock.js"></script>
+    <script type="module" src="js/Worker.js"></script>
+    <script type="module" src="js/WorkerManager.js"></script>
+</body>
+
+</html>

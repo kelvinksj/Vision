@@ -1,0 +1,108 @@
+{
+  "DraggableItem": [
+    {
+      "ID": 1,
+      "LayoutName": "QS0001",
+      "Description": "",
+      "Item": [
+        {
+          "CssClass": "longX-table",
+          "TopPx": "99px",
+          "LeftPx": "-772px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vLeft-table",
+          "TopPx": "96px",
+          "LeftPx": "-813px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "longX-table",
+          "TopPx": "0px",
+          "LeftPx": "-379px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vLeft-table",
+          "TopPx": "-3px",
+          "LeftPx": "-522px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "shortX-table",
+          "TopPx": "201px",
+          "LeftPx": "-527px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vRight-table",
+          "TopPx": "193px",
+          "LeftPx": "-361px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "longY-table",
+          "TopPx": "83px",
+          "LeftPx": "-846px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "shortY-table",
+          "TopPx": "-8px",
+          "LeftPx": "-143px",
+          "IsInitial": false
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "LayoutName": "Test",
+      "Description": "",
+      "Item": [
+        {
+          "CssClass": "longX-table",
+          "TopPx": "-43px",
+          "LeftPx": "-531px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vRight-table",
+          "TopPx": "-43px",
+          "LeftPx": "-359px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "shortX-table",
+          "TopPx": "241px",
+          "LeftPx": "-348px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vLeft-table",
+          "TopPx": "236px",
+          "LeftPx": "-498px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "longY-table",
+          "TopPx": "41px",
+          "LeftPx": "-745px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "shortY-table",
+          "TopPx": "51px",
+          "LeftPx": "-789px",
+          "IsInitial": false
+        },
+        {
+          "CssClass": "vLeft-table",
+          "TopPx": "55px",
+          "LeftPx": "-836px",
+          "IsInitial": false
+        }
+      ]
+    }
+  ]
+}

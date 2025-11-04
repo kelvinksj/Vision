@@ -1,0 +1,145 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/LineEdit"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject HttpClient Http
+@inject IJSRuntime jsRuntime
+@inject MattelService MattelService
+@inject NavigationManager NavigationManager
+
+<style>
+    .dotted-line-container {
+        position: relative;
+        height: 50px;
+        width: 80px;
+    }
+
+    .pop-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .pop-content {
+            position: relative;
+            height: 260px;
+            width: 600px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .pop-header {
+            width: 100%;
+            background: grey;
+            color: white;
+            padding: 5px;
+            font-size: 28px;
+            height: auto;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .custom-select-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .custom-select {
+            width: 150px;
+        }
+
+        .custom-select-arrow {
+            position: absolute;
+            right: 117px;
+            top: 7px;
+            pointer-events: none;
+        }
+    }
+</style>
+
+<AuthorizeView Roles="Administrator,Engineer,Supervisor">
+    <Authorized>
+        <div class="pop-overlay" style="@(true ? "display: flex;" : "display: none;")">
+            <div class="segmentColumn" style="border: 2px solid black;">
+                <label class="pop-header no-select">Assign Line</label>
+                <div class="pop-content">
+                    <div class="segmentColumn">
+                        <EditForm Model="@lineData" OnValidSubmit="() => OnValidSubmit()" autocomplete="off"
+                            Context="editContext">
+                            <DataAnnotationsValidator />
+                            <div class="segmentColumn gapBottom">
+                                <div class="segmentColumn gapBottom">
+                                    <label class="no-select">Line Name</label>
+                                    <InputText @bind-Value="lineData.LineName" class="form-control"
+                                        placeholder="Line Name" autocomplete="off" disabled="True" />
+                                    @* <ValidationMessage For="() => user.UserName" /> *@
+                                </div>
+                                <div class="segmentColumn">
+                                    <label class="no-select">Kit Layout</label>
+                                    <div class="custom-select-wrapper">
+                                        <InputSelect class="form-control custom-select" style="@selectFontColor"
+                                            @bind-Value="lineData.OrderKitNumber">
+                                            @* @bind-Value:after="() => HandleOnChange2(orderKit.LayoutName)"> *@
+                                            @if (lineData.OrderKitNumber == null || lineData.OrderKitNumber ==
+                                            string.Empty)
+                                            {
+                                                selectFontColor = "color: rgba(0, 0, 0, 0.6)";
+                                            }
+                                            else
+                                            {
+                                                selectFontColor = "color: rgba(0, 0, 0, 1)";
+                                            }
+                                            <option value="" disabled selected hidden>Kit Layout</option>
+                                            @foreach (var item in orderKitList.OrderKit)
+                                            {
+                                                <option value="@item.OrderKitNumber" style="color: rgba(0, 0, 0, 1)">
+                                                    @item.OrderKitNumber
+                                                </option>
+                                            }
+                                        </InputSelect>
+                                        @* <ValidationMessage For="() => user.UserRole" /> *@
+                                        <svg class="custom-select-arrow" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 10l5 5 5-5" stroke="#000" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </EditForm>
+                        <div class="btn-wrapper">
+                            <div class="segmentRow">
+                                <button type="button" class="btn btn-sm common-btn gapRight" @onclick="() => OnClickConfirm()">
+                                    Save
+                                </button>
+                                <button type="button" class="btn btn-sm common-btn" @onclick="() => OnClickCancel()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <PopMsg PopMsgData="@popMsgData" />
+    </Authorized>
+    <NotAuthorized>
+        <span class="spinner-border spinner-border-lg align-center" />
+        <span> Checking authorization in progress ...........</span>
+    </NotAuthorized>
+</AuthorizeView>

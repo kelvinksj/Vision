@@ -1,0 +1,231 @@
+@using TaskManagerWeb.Components.Pages.Common
+
+@page "/Mattel/DragDrop"
+@rendermode InteractiveServer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CommonLib CommonLib
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+
+<style>
+    #canvas {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        @* border: 1px solid black; *@
+    }
+
+    .drop-place {
+        position: absolute;
+        width: 900px;
+        height: 550px;
+        right: 160px;
+        top:  -100px;
+    }
+
+    .vLeft-table {
+        width: 0;
+        height: 0;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-right: 30px solid #3498db;
+        border-left: 0;
+        position: absolute;
+    }
+
+    .vRight-table {
+        width: 0;
+        height: 0;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 30px solid #000000;
+        border-right: 0;
+        position: absolute;
+    }
+
+    .shortX-table {
+        width: 40px;
+        height: 20px;
+        border: 11px solid #e74c3c;
+        /* Red border */
+        background-color: transparent;
+        position: absolute;
+        box-sizing: border-box;
+    }
+
+    .longX-table {
+        width: 55px;
+        height: 20px;
+        border: 11px solid #2ecc71;
+        /* Green border */
+        background-color: transparent;
+        position: absolute;
+        box-sizing: border-box;
+    }
+
+    .shortY-table {
+        width: 20px;
+        height: 40px;
+        border: 11px solid rgb(190, 116, 4);
+        /* Brown border */
+        background-color: transparent;
+        position: absolute;
+        box-sizing: border-box;
+    }
+
+    .longY-table {
+        width: 20px;
+        height: 55px;
+        border: 11px solid #ff00aa;
+        /* Pink border */
+        background-color: transparent;
+        position: absolute;
+        box-sizing: border-box;
+    }
+
+    .icon_person01 {
+        width: 35px;
+        height: 35px;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .box-outer {
+        --outer-height: 60px;
+        --outer-width: 60px;
+        --title-height: 0.6;
+        height: var(--outer-height);
+        width: var(--outer-width);
+        border: 1px solid black;
+        box-sizing: border-box;
+        cursor: default;
+    }
+
+    .icon_delete {
+        width: 35px;
+        height: 55px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        gap: 10px; /* Adjust spacing between items */
+        width: fit-content;
+        margin-top: 5px;
+        margin-left: -4px;
+    }
+</style>
+
+<script>
+    window.setDragData = function (data) {
+        document.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData("application/json", JSON.stringify(data));
+        });
+    };
+
+    window.checkDropTarget = (x, y) => {
+        let element = document.elementFromPoint(x, y);
+        if (element && element.id === "dropArea") {
+            console.log("Dropped inside drop area!");
+            return true;  // Allow drop
+        } else {
+            console.log("Dropped outside! Drop rejected.");
+            return false; // Prevent drop
+        }
+    };
+</script>
+
+@if (QuickSetupData.IsVisible)
+{
+    <div class="box-wrapper">
+        <div class="box2">
+            <div class="segmentRow">
+                <div class="segmentColumn" style="top: -10px; right: -50px;">
+                    @if (QuickSetupData.ShowInitial)
+                    {
+                        <div class="segmentRow gapBottom">
+                            <div class="icon_information gapRight" />
+                            <div class="no-select" style="font-size: 16px; color: red; white-space: nowrap;">
+                                Please Drag & <br> Drop to create <br> your layout
+                            </div>
+                        </div>
+                        
+                        <div class="segmentRow" style="position: relative; display: flex; flex-direction: column;">
+                            <!-- Drop Area and Items -->
+                            <div class="segmentColumn gapRight no-select" />
+                            <div id="dropArea" class="drop-place no-select" ondragover="event.preventDefault();"
+                                @ondrop="Drop" />
+
+                            <!-- Remove Icon Area -->
+                            <div id="dropArea" class="segmentRow" style="margin-bottom: 10px; right: 4px">
+                                <div class="box-outer" style="position: relative;" ondragover="event.preventDefault();"
+                                    @ondrop="Drop">
+                                    <div class="icon_delete setSVG no-select" />
+                                </div>
+                                <div class="no-select" style="font-size: 16px; color: red; margin-left: 5px;">
+                                    Drop here <br> to remove
+                                </div>
+                            </div>                            
+
+                            <div class="segmentRow">
+                                <!-- Grid Container for Items -->
+                                <div class="grid-container">
+                                    @for (int i = 1; i <= 7; i++)
+                                    {
+                                        <div class="box-outer gapBottom" />
+                                    }
+                                    @foreach (var item in QuickSetupData.InitialItems)
+                                    {
+                                        string htmlStyle = $"position: absolute; top: {item.TopPx}; left: {item.LeftPx}; z-index: 10";
+
+                                        <div class="no-select @item.CssClass" style="@htmlStyle" draggable="true"
+                                            @ondragstart="@(e => DragStart(e, item))" @onmousedown="() => HandleOnMouseDown()" />
+                                    }
+                                    @foreach (var item in QuickSetupData.Items)
+                                    {
+                                        _ = int.TryParse(item.LeftPx[..^2], out int originalX);
+                                        _ = int.TryParse(item.TopPx[..^2], out int originalY);
+
+                                        string Left2Px = $"{originalX + QuickSetupData.OffsetX}px";
+                                        string Top2Px = $"{originalY + QuickSetupData.OffsetY}px";
+                                        string isDrag = item.IsDraggable.ToString();
+
+                                        string htmlStyle = $"position: absolute; top: {Top2Px}; left: {Left2Px}; z-index: 10";
+
+                                        <div class="no-select @item.CssClass" style="@htmlStyle" draggable="@isDrag"
+                                            @ondragstart="@(e => DragStart(e, item))" @ondragend="@(e => Drop(e))"
+                                            @onmousedown="() => HandleOnMouseDown()" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in QuickSetupData.Items)
+                        {
+                            _ = int.TryParse(item.LeftPx[..^2], out int originalX);
+                            _ = int.TryParse(item.TopPx[..^2], out int originalY);
+
+                            string Left2Px = $"{originalX + QuickSetupData.OffsetX}px";
+                            string Top2Px = $"{originalY + QuickSetupData.OffsetY}px";
+                            string isDrag = item.IsDraggable.ToString();
+
+                            string htmlStyle = $"position: absolute; top: {Top2Px}; left: {Left2Px}; z-index: 10";
+
+                            <div class="no-select @item.CssClass" style="@htmlStyle" draggable="@isDrag"
+                                @ondragstart="@(e => DragStart(e, item))" @ondragend="@(e => Drop(e))"
+                                @onmousedown="() => HandleOnMouseDown()" />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
