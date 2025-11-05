@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaskManagerWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06411ad0c2455adfe09292a33634699850ef25b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7f030fafb913fdd8981ffe3a5a32a3890446a5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaskManagerWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaskManagerWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
