@@ -11,4 +11,3 @@ Don't use this main branch for programming. Create sub branch.
 | Branch Name | Comments |
 |:---|:---|
 | Sample | Use as sample program |
-| New Test | cevern ef jneniew |
