@@ -1,0 +1,81 @@
+@page "/settings"
+@inject IJSRuntime JS
+@inject HttpClient Http
+@inject AppSettingsState Settings
+
+<h2 class="text-xl font-semibold mb-4">⚙ Application Settings</h2>
+
+<!-- CAMERA SETTINGS -->
+<div class="border rounded p-4 mb-4">
+    <h3 class="font-medium mb-2">🎥 Default Camera</h3>
+
+    @if (cameras.Count == 0)
+    {
+        <p>Loading cameras...</p>
+    }
+    else
+    {
+        <select class="border rounded px-2 py-1" @onchange="OnCameraChanged">
+            <option value="">-- Choose Camera --</option>
+            @foreach (var cam in cameras)
+            {
+                <option value="@cam.Id" selected="@(Settings.CameraId == cam.Id)">
+                    @cam.Label
+                </option>
+            }
+        </select>
+    }
+</div>
+
+<!-- MEDIA LIBRARY SETTINGS -->
+<div class="border rounded p-4">
+    <h3 class="font-medium mb-2">📁 Media Library Defaults</h3>
+
+    <div class="mb-2">
+        <label class="mr-2">Folder:</label>
+        <select class="border rounded px-2 py-1"
+                @bind="Settings.DefaultFolder">
+            <option value="">-- Choose Folder --</option>
+            @foreach (var folder in folders)
+            {
+                <option value="@folder">@folder</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label class="mr-2">Type:</label>
+        <select class="border rounded px-2 py-1"
+                @bind="Settings.DefaultMediaType">
+            <option value="photo">Pictures</option>
+            <option value="video">Videos</option>
+        </select>
+    </div>
+</div>
+
+@code {
+    private List<CameraDevice> cameras = new();
+    private List<string> folders = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cameras = await JS.InvokeAsync<List<CameraDevice>>("getCameraList")
+                  ?? new();
+
+        folders = await Http.GetFromJsonAsync<List<string>>("/api/capture/folders")
+                  ?? new();
+    }
+
+    private void OnCameraChanged(ChangeEventArgs e)
+    {
+        Settings.CameraId = e.Value?.ToString();
+        var cam = cameras.FirstOrDefault(c => c.Id == Settings.CameraId);
+        Settings.CameraLabel = cam?.Label;
+    }
+
+    public class CameraDevice
+    {
+        public string Id { get; set; } = "";
+        public string Label { get; set; } = "";
+    }
+}

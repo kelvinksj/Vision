@@ -1,0 +1,244 @@
+@page "/OCR"
+@inject IJSRuntime JS
+@inject AppSettingsState Settings
+
+<h3>Optical Character Recognition (OCR)</h3>
+
+@if (!Settings.HasCamera)
+{
+    <p class="text-red-600 italic">
+        ⚠ No default camera selected. Please configure it in the <a href="/settings" class="underline text-blue-600">Settings</a>..
+    </p>
+}
+else
+{
+    <p class="text-sm text-gray-600">
+        🎥 Camera: <b>@Settings.CameraLabel</b>
+    </p>
+}
+
+<div class="video-container" style="position:relative; width:640px;">
+    @if (!Settings.HasCamera)
+    {
+        <div class="video-placeholder fade-in">
+            📷 No default camera configured. Please set it in Settings.
+        </div>
+    }
+
+    <!-- Video & canvas wrapper -->
+    <div style="position:relative; width:640px; height:480px;">
+        <video id="videoElement"
+               class="@(string.IsNullOrEmpty(selectedCamera) ? "hidden" : "fade-in")"
+               autoplay playsinline width="640" height="480"
+               style="position:absolute; top:0; left:0; z-index:1;"></video>
+
+        <!-- hidden capture canvas -->
+        <canvas id="captureCanvas" width="640" height="480" style="display:none"></canvas>
+
+        <!-- overlay canvas -->
+        <canvas id="overlayCanvas" width="640" height="480"
+                style="position:absolute; top:0; left:0; z-index:3; pointer-events:auto;"></canvas>
+    </div>
+</div>
+
+<div class="mt-2 flex gap-2">
+    <div class="mt-2 flex gap-2">
+        <button class="btn btn-primary" @onclick="EnableCrop" disabled="@IsDetecting">
+            🖊 Draw Crop
+        </button>
+
+        <button class="btn btn-warning" @onclick="LockCrop" disabled="@IsDetecting">
+            ✂ Lock Crop
+        </button>
+
+        <button class="btn btn-success" @onclick="StartOCR" disabled="@(!IsPipelineReady || !IsCropLocked || IsDetecting)">
+            📄 Start OCR
+        </button>
+        <button class="btn btn-info" @onclick="StartDetection" disabled="@(!IsPipelineReady || IsDetecting)">
+            🟢 Start Detection
+        </button>
+    </div>
+</div>
+
+<div class="mt-3">
+    <h5>Detected Text</h5>
+    @if (DetectedTexts.Count == 0)
+    {
+        <p class="italic text-gray-500">No text detected yet.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var txt in DetectedTexts)
+            {
+                <li>@txt</li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="mt-2 text-sm text-yellow-600">
+    @StatusMessage
+</div>
+
+@code {
+    private List<CameraDevice> cameras = new();
+    private string? selectedCamera;
+    private DotNetObjectReference<OCR>? _cbHelper;
+    private bool IsPipelineReady = false;
+    private bool IsDetecting = false;
+    private double CropX = 100;
+    private double CropY = 100;
+    private double CropWidth = 200;
+    private double CropHeight = 100;
+    private bool IsCropLocked = false;
+
+    private string StatusMessage = "";
+    private List<string> DetectedTexts { get; set; } = new();
+
+    public class CameraDevice
+    {
+        public string Id { get; set; } = "";
+        public string Label { get; set; } = "";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        cameras = await JS.InvokeAsync<List<CameraDevice>>("getCameraList");
+        await JS.InvokeVoidAsync("eval", "console.log('DetectionExtensions loaded:', !!window.DetectionExtensions);");
+
+        if (Settings.HasCamera)
+        {
+            selectedCamera = Settings.CameraId;
+
+            await JS.InvokeVoidAsync("startCamera", Settings.CameraId);
+
+            if (_cbHelper == null)
+                _cbHelper = DotNetObjectReference.Create(this);
+
+            // Start the OCR detection pipeline (use QR as default)
+            await JS.InvokeVoidAsync("DetectionModules.startPipeline", "videoElement", _cbHelper, "qr");
+
+            IsPipelineReady = true;
+            Status($"✅ Camera '{Settings.CameraLabel}' ready + pipeline started with QR detection");
+        }
+        else
+        {
+            Status("⚠ No default camera selected. Please configure it in Settings.");
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task OnCameraSelected(ChangeEventArgs e)
+    {
+        selectedCamera = e.Value?.ToString();
+        if (string.IsNullOrEmpty(selectedCamera)) return;
+
+        await JS.InvokeVoidAsync("startCamera", selectedCamera);
+
+        if (_cbHelper == null)
+            _cbHelper = DotNetObjectReference.Create(this);
+
+        // Start detection pipeline using QR detection
+        await JS.InvokeVoidAsync("DetectionModules.startPipeline", "videoElement", _cbHelper, "qr");
+
+        IsPipelineReady = true;
+        Status("✅ Camera ready + pipeline started with QR detection");
+    }
+    private void Status(string msg)
+    {
+        StatusMessage = $"[{DateTime.Now:HH:mm:ss}] {msg}";
+        Console.WriteLine(StatusMessage);
+    }
+
+    [JSInvokable]
+    public void UpdateOCRResult(string text)
+    {
+        if (!string.IsNullOrEmpty(text))
+        {
+            DetectedTexts.Add(text);
+            Status($"📝 Text detected: {text}");
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose()
+    {
+        _cbHelper?.Dispose();
+    }
+
+    private async Task EnableCrop()
+    {
+        // Stop any ongoing detection first
+        if (_cbHelper != null)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("DetectionModules.stopPipeline");
+                Status("🛑 Detection stopped to allow crop drawing.");
+            }
+            catch (Exception ex)
+            {
+                Status($"⚠ Failed to stop detection: {ex.Message}");
+            }
+        }
+
+        // Enable crop drawing
+        await JS.InvokeVoidAsync("enableCustomCrop", "overlayCanvas");
+        IsCropLocked = false; // reset locked status
+        Status("🖊 Draw crop area on the overlay canvas.");
+    }
+
+    private async Task LockCrop()
+    {
+        await JS.InvokeVoidAsync("lockCropArea");
+        IsCropLocked = true;
+        Status("✂ Crop area locked.");
+    }
+
+    private async Task StartOCR()
+    {
+        if (!IsPipelineReady || !IsCropLocked || IsDetecting) return;
+
+        IsDetecting = true;
+        Status("🔍 OCR started");
+
+        if (_cbHelper == null)
+            _cbHelper = DotNetObjectReference.Create(this);
+
+        await JS.InvokeVoidAsync("startOCR", _cbHelper);
+
+        IsDetecting = false;
+    }
+
+    private async Task StartDetection()
+    {
+        if (string.IsNullOrEmpty(selectedCamera))
+        {
+            Status("⚠ Please select a camera first.");
+            return;
+        }
+
+        if (_cbHelper == null)
+            _cbHelper = DotNetObjectReference.Create(this);
+
+        try
+        {
+            // Call the DetectionModules pipeline
+            await JS.InvokeVoidAsync("DetectionModules.startPipeline",
+                "videoElement",      // video element
+                _cbHelper,           // DotNetObjectReference (callback if needed)
+                "qr");               // detectionType -> detectAllCodes will be used
+
+            Status("🟢 Detection started (QR + 1D barcodes). Overlays are drawn automatically.");
+        }
+        catch (Exception ex)
+        {
+            Status($"❌ Failed to start detection: {ex.Message}");
+        }
+    }
+
+}

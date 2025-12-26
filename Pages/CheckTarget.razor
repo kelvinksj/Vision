@@ -1,0 +1,78 @@
+@page "/check-target"
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<h3>Selected Target Check</h3>
+
+@if (string.IsNullOrEmpty(TargetImageUrl))
+{
+    <p class="text-gray-500 italic">No target image provided.</p>
+}
+else
+{
+    <div>
+        <p>✅ Here is the captured target:</p>
+        <canvas id="targetCanvas" style="border:2px solid lime; max-width:400px;"></canvas>
+
+        <div class="mt-2 text-sm">
+            <p>📍 Offset X: @OffsetX px</p>
+            <p>📍 Offset Y: @OffsetY px</p>
+            <p>🔄 Rotation Angle: @RotationAngle°</p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "img")]
+    public string TargetImageQuery { get; set; } = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "offsetX")]
+    public double OffsetXQuery { get; set; } = 0;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "offsetY")]
+    public double OffsetYQuery { get; set; } = 0;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "angle")]
+    public double RotationAngleQuery { get; set; } = 0;
+
+    private string TargetImageUrl = "";
+    private double OffsetX = 0;
+    private double OffsetY = 0;
+    private double RotationAngle = 0;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(TargetImageQuery))
+        {
+            TargetImageUrl = Uri.UnescapeDataString(TargetImageQuery);
+            OffsetX = OffsetXQuery;
+            OffsetY = OffsetYQuery;
+            RotationAngle = RotationAngleQuery;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !string.IsNullOrEmpty(TargetImageUrl))
+        {
+            await DrawImageWithCenterPoint(TargetImageUrl, OffsetX, OffsetY, RotationAngle);
+        }
+    }
+
+    private async Task DrawImageWithCenterPoint(string imageUrl, double offsetX, double offsetY, double angle)
+    {
+        await JS.InvokeVoidAsync(
+            "CheckTarget.drawImageWithCenterPoint",
+            "targetCanvas",
+            imageUrl,
+            offsetX,
+            offsetY,
+            angle,
+            400
+        );
+    }
+}

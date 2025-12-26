@@ -1,0 +1,261 @@
+@page "/color-detection"
+@inject IJSRuntime JS
+@inject AppSettingsState Settings
+
+<h3>🎨 Color + Brightness Detection Live Feed</h3>
+
+@if (!Settings.HasCamera)
+{
+    <p class="text-red-600 italic">
+        ⚠ No default camera selected. Please configure it in the <a href="/settings" class="underline text-blue-600">Settings</a>..
+    </p>
+}
+else
+{
+    <p class="text-sm text-gray-600">
+        🎥 Camera: <b>@Settings.CameraLabel</b>
+    </p>
+}
+
+<div class="video-container" style="position:relative; width:640px;">
+    @if (!Settings.HasCamera)
+    {
+        <div class="video-placeholder fade-in">
+            📷 No default camera configured. Please set it in Settings.
+        </div>
+    }
+
+    <!-- Video & canvas wrapper -->
+    <div style="position:relative; width:640px; height:480px;">
+        <video id="videoElement"
+               class="@(string.IsNullOrEmpty(selectedCamera) ? "hidden" : "fade-in")"
+               autoplay playsinline width="640" height="480"
+               style="position:absolute; top:0; left:0; z-index:1;"></video>
+
+        <!-- hidden capture canvas -->
+        <canvas id="captureCanvas" width="640" height="480" style="display:none"></canvas>
+
+        <!-- overlay canvas -->
+        <canvas id="overlayCanvas" width="640" height="480"
+                style="position:absolute; top:0; left:0; z-index:3; pointer-events:auto;"></canvas>
+    </div>
+</div>
+
+<div class="mt-2">
+    <button class="btn btn-success" @onclick="StartColorDetection" disabled="@IsStartButtonDisabled">
+        🟢 Start Detection
+    </button>
+    <button class="btn btn-danger" @onclick="StopDetection" disabled="@(!IsDetecting)">
+        🔴 Stop
+    </button>
+</div>
+
+<hr />
+
+@* <h5>Detected Colors</h5>
+<ul>
+    @foreach (var item in DetectedItems)
+    {
+        <li>
+            #@item.id | @item.shape | @item.color
+            (R:@item.rgb.r G:@item.rgb.g B:@item.rgb.b)
+        </li>
+    }
+</ul>
+
+<h5>Brightness / Contrast</h5>
+<ul>
+    <li>Brightness: @Brightness.ToString("F2")</li>
+    <li>Contrast: @Contrast.ToString("F2")</li>
+    <li>Status: @SurfaceStatus</li>
+</ul> *@
+
+@code {
+
+    // ================= State =================
+    private List<CameraDevice> cameras = new();
+    private string? selectedCamera;
+
+    private DotNetObjectReference<ColorDetection>? _cbHelper;
+    private bool IsPipelineReady = false;
+    private bool IsDetecting = false;
+
+    private string StatusMessage = "";
+
+    private double Brightness;
+    private double Contrast;
+    private string SurfaceStatus = "";
+
+    private List<DetectedItem> DetectedItems { get; set; } = new();
+
+    private bool IsStartButtonDisabled => !IsPipelineReady || IsDetecting;
+
+    // ================= Data Models =================
+    public class CameraDevice
+    {
+        public string Id { get; set; } = "";
+        public string Label { get; set; } = "";
+    }
+
+    public class DetectedItem
+    {
+        public int id { get; set; }
+        public string shape { get; set; } = "";
+        public double centerX { get; set; }
+        public double centerY { get; set; }
+        public string color { get; set; } = "";
+        public RGB rgb { get; set; } = new();
+        public Rect rect { get; set; } = new();
+    }
+
+    public class RGB
+    {
+        public int r { get; set; }
+        public int g { get; set; }
+        public int b { get; set; }
+    }
+
+    public class Rect
+    {
+        public double x { get; set; }
+        public double y { get; set; }
+        public double width { get; set; }
+        public double height { get; set; }
+    }
+
+    // ================= Lifecycle =================
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        cameras = await JS.InvokeAsync<List<CameraDevice>>("getCameraList");
+
+        await JS.InvokeVoidAsync("eval", "console.log('✅ DetectionExtensions loaded:', !!window.DetectionExtensions);");
+
+        // 🔹 Auto-start default camera if set
+        if (Settings.HasCamera)
+        {
+            selectedCamera = Settings.CameraId;
+
+            await JS.InvokeVoidAsync("startCamera", Settings.CameraId);
+
+            if (_cbHelper == null)
+                _cbHelper = DotNetObjectReference.Create(this);
+
+            // Start the detection pipeline (use "rect" or your default type)
+            await JS.InvokeVoidAsync(
+                "DetectionModules.startPipeline",
+                "videoElement",
+                _cbHelper,
+                "rect"
+            );
+
+            IsPipelineReady = true;
+            Status($"✅ Camera '{Settings.CameraLabel}' ready + pipeline started");
+        }
+        else
+        {
+            Status("⚠ No default camera selected. Please configure it in Settings.");
+        }
+
+        StateHasChanged();
+    }
+
+    // ================= Camera =================
+    private async Task OnCameraSelected(ChangeEventArgs e)
+    {
+        selectedCamera = e.Value?.ToString();
+
+        if (!string.IsNullOrEmpty(selectedCamera))
+        {
+            await JS.InvokeVoidAsync("startCamera", selectedCamera);
+
+            if (_cbHelper == null)
+                _cbHelper = DotNetObjectReference.Create(this);
+
+            await JS.InvokeVoidAsync(
+                "DetectionModules.startPipeline",
+                "videoElement",
+                _cbHelper,
+                "rect"
+            );
+
+            IsPipelineReady = true;
+            Status("✅ Camera ready + pipeline started");
+        }
+    }
+
+    // ================= Start / Stop =================
+    private async Task StartColorDetection()
+    {
+        if (!IsPipelineReady || IsDetecting)
+            return;
+
+        IsDetecting = true;
+
+        await JS.InvokeVoidAsync(
+            "DetectionExtensions.startColorDetectionLoop",
+            _cbHelper
+        );
+
+        Status("🟢 Detection started");
+    }
+
+    private async Task StopDetection()
+    {
+        IsDetecting = false;
+
+        await JS.InvokeVoidAsync("DetectionExtensions.stop");
+
+        Status("🔴 Detection stopped");
+    }
+
+    // ================= Callbacks from JS =================
+
+    [JSInvokable]
+    public void UpdateDetectedColors(List<DetectedItem> items)
+    {
+        DetectedItems = items;
+        Status($"🎯 Colors detected: {items.Count}");
+
+        if (items.Count > 0)
+        {
+            var first = items[0];
+            Console.WriteLine($"🟢 First Color: {first.color} ({first.rgb.r},{first.rgb.g},{first.rgb.b})");
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public void UpdateBrightnessContrast(string jsonPayload)
+    {
+        try
+        {
+            Console.WriteLine("🌞 Brightness payload (raw JSON): " + jsonPayload);
+
+            var doc = System.Text.Json.JsonDocument.Parse(jsonPayload);
+            var root = doc.RootElement;
+
+            Brightness = root.GetProperty("brightness").GetDouble();
+            Contrast = root.GetProperty("contrast").GetDouble();
+            SurfaceStatus = root.GetProperty("status").GetString() ?? "";
+
+            // update status on page
+            Status($"🌞 Brightness updated: {Brightness:F1}, Contrast: {Contrast:F1} ({SurfaceStatus})");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Brightness parse error: " + ex.Message);
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    // ================= Helpers =================
+    private void Status(string msg)
+    {
+        StatusMessage = $"[{DateTime.Now:HH:mm:ss}] {msg}";
+        Console.WriteLine(StatusMessage);
+    }
+}

@@ -1,0 +1,458 @@
+@page "/media-library"
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject MediaState MediaState
+@inject AppSettingsState Settings
+
+<h2 class="text-xl font-semibold mb-3">Media Library</h2>
+
+@if (!Settings.HasLibraryDefaults)
+{
+    <div class="mb-3 text-sm text-red-600">
+        ⚠ No default folder or type selected. 
+        Please configure your media library defaults in the <a href="/settings" class="underline text-blue-600">Settings</a>.
+    </div>
+}
+else
+{
+    <div class="mb-3 text-sm">
+        📁 Folder: <b>@Settings.DefaultFolder</b> &nbsp; | &nbsp; 
+        🗂 Type: <b>@Settings.DefaultMediaType</b>
+    </div>
+}
+
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (mediaFiles == null || !mediaFiles.Any())
+{
+    <p class="italic text-gray-500">No media found for this selection.</p>
+}
+else
+{
+    <table class="w-full text-sm border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+        <thead class="bg-gray-100 text-gray-700">
+            <tr>
+                <th class="text-left px-3 py-2">File Name</th>
+                <th class="text-left px-3 py-2 w-32">Type</th>
+                <th class="text-left px-3 py-2 w-48">Full Path</th>
+                <th class="text-center px-3 py-2 w-20">Preview</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in pagedFiles)
+            {
+                    <tr class="border-t hover:bg-gray-50 cursor-pointer
+                            @(file.Path == highlightedPath ? "latest-media-row" : "")"
+                        @onclick="() => ShowPreview(file)">
+                    <td class="px-3 py-2">@file.FileName</td>
+                    <td class="px-3 py-2 capitalize">@selectedType</td>
+                    <td class="px-3 py-2 text-gray-500 truncate">@file.Path</td>
+                    <td class="px-3 py-2 text-center">
+                        <button class="text-blue-600 hover:underline">View</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="flex justify-between items-center mt-3 text-sm text-gray-600">
+        <div>
+            Showing @((currentPage - 1) * pageSize + 1)
+            -
+            @(Math.Min(currentPage * pageSize, mediaFiles.Count))
+            of @mediaFiles.Count
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button class="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-40"
+                    disabled="@(!CanGoPrev)" @onclick="PrevPage">◀ Prev</button>
+            <span>Page @currentPage of @totalPages</span>
+            <button class="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-40"
+                    disabled="@(!CanGoNext)" @onclick="NextPage">Next ▶</button>
+        </div>
+    </div>
+}
+
+@if (previewFile != null)
+{
+    <div class="fixed inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black bg-opacity-90 flex flex-col items-center justify-center z-50 backdrop-blur-sm" @onclick="ClosePreview">
+
+        <!-- Close Button -->
+        <button class="fixed top-5 right-6 text-white bg-white/10 hover:bg-white/30 backdrop-blur-sm border border-white/20 rounded-full w-10 h-10 text-2xl flex items-center justify-center transition-all"
+                @onclick="ClosePreview">
+            ×
+        </button>
+
+        <!-- Content -->
+        <div class="relative flex flex-col items-center justify-center max-w-5xl w-[90%] max-h-[90%] p-4 rounded-2xl shadow-2xl bg-black/40 border border-white/10" @onclick:stopPropagation="true">
+            
+            @if (selectedType == "photo")
+            {
+                <div class="relative w-full max-h-[80vh] flex flex-col items-center">
+                    <!-- Preview Stage (defines height) -->
+                    <div class="relative w-full h-[80vh] flex items-center justify-center">
+                        <div class="relative max-w-full max-h-full">
+
+                            <img id="previewImage"
+                                src="@GetFileUrl(previewFile.Path)"
+                                alt="@previewFile.FileName"
+                                class="rounded-lg max-w-full max-h-[80vh] object-contain shadow-lg"
+                                onload="adjustCanvasToImage()" />
+
+                            <canvas id="previewCanvas"
+                                    @ref="previewCanvasRef"
+                                    class="absolute top-0 left-0 pointer-events-auto"
+                                    style="z-index:10; display:none;">
+                            </canvas>
+
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="mt-2 flex gap-2">
+                        <button class="px-3 py-1 border rounded bg-green-600 text-black hover:bg-green-700"
+                                @onclick="EnableDragCircle">
+                            Drag Circles
+                        </button>                    
+                        <button class="px-3 py-1 border rounded bg-blue-600 text-black hover:bg-blue-700"
+                                @onclick="DetectAndEnableCircles">
+                            Detect Circle
+                        </button>
+                        <button class="px-3 py-1 border rounded bg-blue-600 text-black hover:bg-blue-700"
+                                @onclick="ResetImage">
+                            Reset Image
+                        </button>
+                        <span class="text-sm text-white/90" id="circleInfo"></span>
+                    </div>
+
+                </div>
+            }
+
+            else if (selectedType == "video")
+            {
+                <video src="@GetFileUrl(previewFile.Path)" controls autoplay
+                       class="rounded-lg w-full max-h-[80vh] object-contain shadow-lg"></video>
+            }
+
+            <p class="text-center text-gray-200 mt-3 text-sm italic">@previewFile.FileName</p>
+        </div>
+    </div>
+}
+
+@code {
+    private List<string> availableFolders = new();
+    private List<MediaFile>? mediaFiles;
+    private List<MediaFile> pagedFiles = new();
+
+    private string? selectedFolder;
+    private string? selectedType;
+    private bool isLoading = false;
+    private MediaFile? previewFile;
+
+    // pagination
+    private int currentPage = 1;
+    private int pageSize = 5;
+    private int totalPages => mediaFiles == null ? 1 : (int)Math.Ceiling(mediaFiles.Count / (double)pageSize);
+    private bool CanGoPrev => currentPage > 1;
+    private bool CanGoNext => mediaFiles != null && currentPage < totalPages;
+    private ElementReference previewCanvasRef;
+
+    private string? highlightedPath;
+    private bool autoFocused = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            availableFolders = await Http.GetFromJsonAsync<List<string>>("/api/capture/folders") ?? new();
+        }
+        catch
+        {
+            availableFolders = new();
+        }
+
+        // Use Settings defaults if available
+        if (Settings.HasLibraryDefaults)
+        {
+            selectedFolder = Settings.DefaultFolder;
+            selectedType = Settings.DefaultMediaType;
+
+            // Directly call LoadMedia using Settings folder
+            await LoadMedia(selectedFolder!, selectedType!);
+        }
+
+        // Auto-focus latest captured media
+        if (!string.IsNullOrEmpty(MediaState.LatestCapturedPath))
+        {
+            await AutoFocusLatest(MediaState.LatestCapturedPath);
+            MediaState.LatestCapturedPath = null;
+        }
+    }
+
+    private async Task LoadMedia(string folder, string type)
+    {
+        if (string.IsNullOrEmpty(folder) || string.IsNullOrEmpty(type))
+            return;
+
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // The API expects folder and type
+            var url = $"/api/capture/media/{type}/{folder}";
+            mediaFiles = await Http.GetFromJsonAsync<List<MediaFile>>(url) ?? new();
+
+            currentPage = 1;
+            UpdatePagedFiles();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task AutoFocusLatest(string fullPath)
+    {
+        var normalized = fullPath.Replace("\\", "/");
+
+        // If Settings default exists, just use it
+        selectedFolder ??= Settings.DefaultFolder ?? availableFolders
+            .FirstOrDefault(f => normalized.Contains($"/{f}/"));
+
+        selectedType ??= Settings.DefaultMediaType ?? (normalized.Contains("/video/") ? "video" : "photo");
+
+        if (string.IsNullOrEmpty(selectedFolder) || string.IsNullOrEmpty(selectedType))
+            return;
+
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            var url = $"/api/capture/media/{selectedType}/{selectedFolder}";
+            mediaFiles = await Http.GetFromJsonAsync<List<MediaFile>>(url) ?? new();
+
+            highlightedPath = fullPath;
+
+            // Find index of latest file
+            var index = mediaFiles.FindIndex(f => f.Path == fullPath);
+            if (index >= 0)
+            {
+                currentPage = index / pageSize + 1;
+                UpdatePagedFiles();
+
+                previewFile = mediaFiles[index];
+            }
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task OnFolderSelected(ChangeEventArgs e)
+    {
+        selectedFolder = e.Value?.ToString();
+        selectedType = null;
+        mediaFiles = null;
+        previewFile = null;
+        currentPage = 1;
+        pagedFiles.Clear();
+    }
+
+    private async Task OnTypeSelected(ChangeEventArgs e)
+    {
+        selectedType = e.Value?.ToString();
+        if (string.IsNullOrEmpty(selectedFolder) || string.IsNullOrEmpty(selectedType))
+            return;
+
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            var url = $"/api/capture/media/{selectedType}/{selectedFolder}";
+            mediaFiles = await Http.GetFromJsonAsync<List<MediaFile>>(url);
+            currentPage = 1;
+            UpdatePagedFiles();
+        }
+        catch
+        {
+            mediaFiles = new();
+        }
+
+        isLoading = false;
+    }
+
+    private void UpdatePagedFiles()
+    {
+        if (mediaFiles == null) return;
+        pagedFiles = mediaFiles
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
+    private void PrevPage()
+    {
+        if (!CanGoPrev) return;
+        currentPage--;
+        UpdatePagedFiles();
+    }
+
+    private void NextPage()
+    {
+        if (!CanGoNext) return;
+        currentPage++;
+        UpdatePagedFiles();
+    }
+
+    string GetFileUrl(string fullPath)
+    {
+        // Normalize slashes
+        var normalized = fullPath.Replace("\\", "/");
+
+        // Look for known base folder (Pictures, Video)
+        var baseIndex = normalized.IndexOf("Picture/");
+        if (baseIndex < 0)
+            baseIndex = normalized.IndexOf("Video/");
+
+        if (baseIndex >= 0)
+        {
+            var relative = normalized.Substring(baseIndex); // e.g., "Picture/HD Pro Webcam C920/..."
+            return "/" + relative; // URL path
+        }
+
+        // fallback
+        return "/" + normalized;
+    }
+
+    private async Task ShowPreview(MediaFile file)
+    {
+        previewFile = file;
+    }
+
+    private async Task EnableDragCircle()
+    {
+        if (previewFile == null) return;
+
+        // 1️⃣ Draw image into canvas and hide img
+        await JS.InvokeVoidAsync(
+            "drawImageToCanvasAndHideImg",
+            "previewImage",
+            "previewCanvas"
+        );
+
+        // 2️⃣ Enable drag logic
+        await JS.InvokeVoidAsync(
+            "CircleDetection.enableDragCircleMode",
+            "previewCanvas"
+        );
+    }
+
+    private async Task DetectAndEnableCircles()
+    {
+        if (previewFile == null) return;
+
+        // Ensure canvas is on top
+        await JS.InvokeVoidAsync("eval", @"
+            const canvas = document.getElementById('previewCanvas');
+            canvas.style.display = 'block';
+        ");
+
+        // Check if user dragged circles
+        bool hasDragged = await JS.InvokeAsync<bool>("eval", "!!window.CircleDetection.draggedCircles && window.CircleDetection.draggedCircles.length > 0");
+
+        if (hasDragged)
+        {
+            // Use dragged circles
+            await JS.InvokeVoidAsync("CircleDetection.syncDraggedCirclesToDetection");
+
+            // Redraw dragged circles + centroid
+            await JS.InvokeVoidAsync("eval", @"
+                const canvas = document.getElementById('previewCanvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                const img = document.getElementById('previewImage');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                const circles = window.CircleDetection.circles || [];
+                for(const c of circles){
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.r, 0, 2*Math.PI);
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, 3, 0, 2*Math.PI);
+                    ctx.fillStyle = 'red';
+                    ctx.fill();
+                }
+
+                const centroid = window.CircleDetection.centroid;
+                if(centroid){
+                    ctx.beginPath();
+                    ctx.arc(centroid.x, centroid.y, 6, 0, 2*Math.PI);
+                    ctx.fillStyle = 'blue';
+                    ctx.linewidth = 2;
+                    ctx.fill();
+                }
+            ");
+        }
+        else
+        {
+            // No dragged circles → detect from original image
+            await JS.InvokeVoidAsync("adjustCanvasToImage");
+
+            await JS.InvokeVoidAsync("CircleDetection.detectCirclesFromSource",
+                "previewImage", "previewCanvas");
+                
+        }
+    }
+
+    private async Task ResetPreviewCanvasStateAsync()
+    {
+                await JS.InvokeVoidAsync("eval", @"
+            if(window.CircleDetection){
+                window.CircleDetection.draggedCircles = [];
+                window.CircleDetection.circles = [];
+                window.CircleDetection.centroid = null;
+                const canvas = document.getElementById('previewCanvas');
+                if(canvas) {
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    canvas.style.display = 'none';
+                }
+                const img = document.getElementById('previewImage');
+                if(img) img.style.display = 'block';
+            }
+        ");
+    }
+
+    private async Task ResetImage()
+    {
+        await JS.InvokeVoidAsync("restoreImageFromCanvas", "previewImage", "previewCanvas");
+        
+        // Clear all dragged circles and reset centroid
+        await ResetPreviewCanvasStateAsync();
+    }
+
+    private async Task ClosePreview()
+    {
+        previewFile = null;
+
+        await ResetPreviewCanvasStateAsync();
+    }
+
+    public class MediaFile
+    {
+        public string FileName { get; set; } = "";
+        public string Path { get; set; } = "";
+    }
+
+}
